@@ -9,7 +9,7 @@ export default function Consola({ coach, children }) {
     <div className="consola atv-shell">
       <aside className="consola-side">
         <Link to="/" className="consola-brand">
-          <span className="sq">R</span>
+          <img src="/ATVWhite.png" alt="Aumenta Tu Valor" />
           <strong>ROADMAPS</strong>
         </Link>
         <nav className="consola-nav">

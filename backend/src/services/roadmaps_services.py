@@ -102,9 +102,33 @@ class RoadmapsServices:
                         actualizado_en=roadmap.actualizado_en,
                         tareas_totales=totales,
                         tareas_hechas=hechas,
+                        titulo=roadmap.titulo or None,
+                        preview=self._preview(roadmap),
                     )
                 )
             return salida
+
+    @staticmethod
+    def _preview(roadmap, lineas: int = 12) -> list[str]:
+        """Las primeras líneas del documento, para la miniatura de la lista.
+        Se arma acá y no en el frontend para que la lista siga siendo un pedido."""
+        salida: list[str] = []
+        if roadmap.meta_mes:
+            salida.append(roadmap.meta_mes)
+        if roadmap.foco_mes:
+            salida.append(roadmap.foco_mes)
+        for semana in sorted(roadmap.semanas, key=lambda s: s.orden):
+            if len(salida) >= lineas:
+                break
+            titulo = semana.etiqueta
+            if semana.nombre:
+                titulo = f"{titulo} — {semana.nombre}"
+            salida.append(titulo)
+            for tarea in sorted(semana.tareas, key=lambda t: t.orden):
+                if len(salida) >= lineas:
+                    break
+                salida.append(tarea.tarea)
+        return salida[:lineas]
 
     # ——— detalle ———
 

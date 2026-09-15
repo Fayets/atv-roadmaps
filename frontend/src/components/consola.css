@@ -31,17 +31,10 @@
   text-decoration: none;
 }
 
-.consola-brand .sq {
-  width: 26px;
-  height: 26px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4);
-  display: grid;
-  place-items: center;
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
+.consola-brand img {
+  width: 22px;
+  height: auto;
+  flex: none;
 }
 
 .consola-brand strong {

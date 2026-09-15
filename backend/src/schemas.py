@@ -40,6 +40,9 @@ class RoadmapListItem(BaseModel):
     actualizado_en: datetime
     tareas_totales: int = 0
     tareas_hechas: int = 0
+    # Para dibujar la miniatura del documento en la lista, sin pedir el detalle.
+    titulo: str | None = None
+    preview: list[str] = []
 
 
 class RoadmapCreadoResponse(BaseModel):

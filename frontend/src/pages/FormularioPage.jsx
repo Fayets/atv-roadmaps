@@ -98,7 +98,7 @@ export default function FormularioPage() {
         <header className="cliente-head">
           <div className="brandline">
             <span className="lg">
-              <span className="sq">A</span>
+              <img src="/ATVWhite.png" alt="" />
               <strong>Aumenta Tu Valor</strong>
             </span>
             {form.programa && <span className="tag red">{form.programa}</span>}
