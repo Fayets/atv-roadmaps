@@ -1,158 +1,80 @@
 """
-Las preguntas del formulario que completa el cliente.
+Las preguntas de la ficha que completa el cliente.
 
-Esto es configuración, no lógica: cambiar una pregunta acá es todo lo que hace
-falta para cambiar el formulario y lo que recibe la IA. El `id` de cada pregunta
-es la llave con la que viaja la respuesta, así que conviene no renombrarlos una
-vez que hay roadmaps generados.
+Son las siete que definió Franco. Esto es configuración, no lógica: cambiar una
+pregunta acá es todo lo que hace falta para cambiar el formulario y lo que
+recibe la IA.
 
-El orden de los bloques es el orden en que la IA necesita el contexto: qué vende,
-desde qué números arranca, con qué audiencia cuenta, qué sistema de ventas tiene
-y recién al final a dónde quiere llegar este mes. El roadmap es mensual (cuatro
-semanas), como el entregable real de ATV en Notion.
+Los `id` son la llave con la que viaja cada respuesta y están elegidos para que
+coincidan con los campos que el agente de utari espera en su plantilla
+(qué vende y a quién, precio, clientes activos, facturación, problema principal,
+cómo consigue clientes, lista de contactables). No renombrarlos sin avisar del
+otro lado.
 
-PENDIENTE: la lista definitiva la define Franco. Estas son las que se deducen de
-los programas (avatar, método único, MVP, recurso semanal, VSL de chat, triage).
+Van en dos pasos de tres y cuatro preguntas: la ficha tiene que poder llenarse
+en diez minutos y dos pantallas cortas se completan más que una larga.
 """
 
 BLOQUES = [
     {
         "id": "negocio",
-        "titulo": "Tu negocio y tu oferta",
+        "titulo": "Tu negocio hoy",
         "preguntas": [
             {
-                "id": "avatar",
-                "label": "¿A quién le vendés hoy?",
-                "ayuda": "Lo más específico que puedas: a qué se dedica, qué factura, qué quiere lograr.",
+                "id": "que_vendes",
+                "label": "¿Qué vendés y a quién le vendés?",
+                "ayuda": "Lo más específico que puedas: qué es la oferta y a qué tipo de persona o negocio.",
                 "tipo": "texto_largo",
             },
             {
-                "id": "oferta",
-                "label": "¿Qué le vendés y a qué precio?",
-                "ayuda": "Nombre del programa o servicio, duración y precio actual.",
-                "tipo": "texto_largo",
+                "id": "precio",
+                "label": "¿A qué precio vendés tu oferta principal?",
+                "ayuda": "Si tenés varios planes, el que más vendas.",
+                "tipo": "texto",
             },
             {
-                "id": "metodo_unico",
-                "label": "¿Tenés tu método único escrito?",
-                "tipo": "opcion",
-                "opciones": [
-                    {"id": "si", "label": "Sí, lo puedo explicar en una llamada"},
-                    {"id": "parcial", "label": "Lo tengo en la cabeza, sin escribir"},
-                    {"id": "no", "label": "Todavía no"},
-                ],
+                "id": "clientes_activos",
+                "label": "¿Cuántos clientes activos tenés ahora?",
+                "tipo": "numero",
             },
-        ],
-    },
-    {
-        "id": "numeros",
-        "titulo": "Los números de hoy",
-        "preguntas": [
             {
                 "id": "facturacion_mes",
-                "label": "¿Cuánto facturaste el último mes? (USD)",
+                "label": "¿Cuánto facturaste el último mes?",
+                "ayuda": "En USD. Un número aproximado sirve.",
                 "tipo": "numero",
-            },
-            {
-                "id": "ventas_mes",
-                "label": "¿Cuántas ventas del programa hiciste el último mes?",
-                "tipo": "numero",
-            },
-            {
-                "id": "llamadas_mes",
-                "label": "¿Cuántas llamadas de venta tuviste el último mes?",
-                "ayuda": "Las que se presentaron, no las agendadas.",
-                "tipo": "numero",
-            },
-            {
-                "id": "equipo",
-                "label": "¿Con quién trabajás hoy?",
-                "ayuda": "Setter, closer, editor, nadie todavía.",
-                "tipo": "texto",
-                "requerida": False,
             },
         ],
     },
     {
-        "id": "audiencia",
-        "titulo": "Audiencia y contenido",
+        "id": "situacion",
+        "titulo": "Dónde estás trabado",
         "preguntas": [
             {
-                "id": "canales",
-                "label": "¿Dónde está tu audiencia hoy?",
-                "tipo": "opciones",
-                "opciones": [
-                    {"id": "instagram", "label": "Instagram"},
-                    {"id": "youtube", "label": "YouTube"},
-                    {"id": "tiktok", "label": "TikTok"},
-                    {"id": "email", "label": "Email"},
-                    {"id": "comunidad", "label": "Comunidad propia"},
-                    {"id": "ninguno", "label": "Nada todavía"},
-                ],
-            },
-            {
-                "id": "recurso_semanal",
-                "label": "¿Tenés recurso semanal publicando?",
-                "ayuda": "El video de YouTube que ordena el resto del contenido de la semana.",
-                "tipo": "opcion",
-                "opciones": [
-                    {"id": "si", "label": "Sí, todas las semanas"},
-                    {"id": "a_veces", "label": "A veces"},
-                    {"id": "no", "label": "No"},
-                ],
-            },
-            {
-                "id": "seguidores",
-                "label": "¿Cuántos seguidores tenés en tu canal principal?",
-                "tipo": "numero",
-                "requerida": False,
-            },
-        ],
-    },
-    {
-        "id": "ventas",
-        "titulo": "Tu sistema de ventas",
-        "preguntas": [
-            {
-                "id": "piezas_venta",
-                "label": "¿Qué piezas del sistema ya tenés funcionando?",
-                "tipo": "opciones",
-                "opciones": [
-                    {"id": "vsl_chat", "label": "VSL de chat"},
-                    {"id": "agendamiento", "label": "Proceso de agendamiento"},
-                    {"id": "triage", "label": "Triage"},
-                    {"id": "nutricion", "label": "Nutrición previa a la llamada"},
-                    {"id": "ninguna", "label": "Ninguna"},
-                ],
-            },
-            {
-                "id": "cuello_botella",
-                "label": "¿Dónde sentís que se te traba hoy?",
+                "id": "problema_principal",
+                "label": "¿Cuál es el problema principal que te frenó este mes?",
                 "ayuda": "Si tuvieras que señalar una sola cosa.",
                 "tipo": "texto_largo",
             },
-        ],
-    },
-    {
-        "id": "objetivo",
-        "titulo": "El objetivo del mes",
-        "preguntas": [
             {
-                "id": "objetivo_mes",
-                "label": "¿Qué querés lograr este mes?",
-                "ayuda": "Un número concreto sirve más que una intención.",
-                "tipo": "texto_largo",
+                "id": "como_consigue_clientes",
+                "label": "¿Cómo conseguís clientes hoy?",
+                "tipo": "opcion",
+                "opciones": [
+                    {"id": "organico", "label": "Orgánico"},
+                    {"id": "ads", "label": "Ads"},
+                    {"id": "referencias", "label": "Referencias"},
+                    {"id": "todo", "label": "Todo a la vez"},
+                ],
             },
             {
-                "id": "horas_semana",
-                "label": "¿Cuántas horas por semana le podés dedicar?",
-                "tipo": "numero",
-            },
-            {
-                "id": "obstaculo",
-                "label": "¿Qué te impidió lograrlo hasta ahora?",
-                "tipo": "texto_largo",
-                "requerida": False,
+                "id": "lista_contactables",
+                "label": "¿Tenés una lista de clientes pasados o leads con los que podrías contactarte esta semana?",
+                "tipo": "opcion",
+                "opciones": [
+                    {"id": "si", "label": "Sí, tengo una lista"},
+                    {"id": "algunos", "label": "Algunos, sueltos"},
+                    {"id": "no", "label": "No tengo"},
+                ],
             },
         ],
     },

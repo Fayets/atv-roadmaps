@@ -10,21 +10,22 @@
  * que se lee cómodo, no la tipografía de marca.
  */
 :root {
-  /* Fondo */
-  --bg: #0a0505;
-  --bg-deep: #000000;
+  /* Fondo. Carbón cálido, no negro: el #0a0505 del onboarding funciona detrás
+     de una tarjeta suelta, pero en pantallas llenas quedaba una cueva. */
+  --bg: #282326;
+  --bg-deep: #201c1e;
 
-  /* Superficies de vidrio */
-  --surface: rgba(255, 255, 255, 0.03);
-  --surface-2: rgba(255, 255, 255, 0.05);
-  --surface-3: rgba(255, 255, 255, 0.07);
-  --shell: rgba(18, 18, 18, 0.95);
-  --sidebar: rgba(255, 255, 255, 0.02);
+  /* Superficies */
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --surface-3: rgba(255, 255, 255, 0.11);
+  --shell: #332d31;
+  --sidebar: rgba(255, 255, 255, 0.035);
 
   /* Bordes */
-  --border: rgba(255, 255, 255, 0.07);
-  --border-soft: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.14);
+  --border: rgba(255, 255, 255, 0.11);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.2);
   --border-accent: rgba(230, 57, 70, 0.4);
 
   /* Texto. Subido de contraste: sobre el fondo rojo, el 45% no se leía. */
@@ -66,5 +67,5 @@
 
   /* Fondo de la consola: casi plano, como ATV Ops. El glow fuerte queda para
      las pantallas del cliente, donde hay una sola tarjeta y no estorba. */
-  --consola-bg: #161214;
+  --consola-bg: #2c2729;
 }

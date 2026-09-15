@@ -105,8 +105,8 @@ export default function FormularioPage() {
           </div>
           <h1>Tus próximos pasos del mes</h1>
           <p className="cliente-lede">
-            Diez minutos de respuestas y tu coach arma el plan de las próximas cuatro semanas sobre tu
-            negocio real, no sobre un promedio.
+            Siete preguntas y tu coach arma el plan de las próximas cuatro semanas sobre tu negocio
+            real, no sobre un promedio.
           </p>
           <div className="prog" aria-hidden="true">
             {form.bloques.map((b, i) => (
