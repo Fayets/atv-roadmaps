@@ -225,6 +225,66 @@ class RoadmapsServices:
             roadmap.actualizado_en = datetime.utcnow()
             return self._armar_detalle(roadmap)
 
+    def editar(self, token: str, body) -> RoadmapDetalleResponse:
+        """Guarda el documento corregido por el coach.
+
+        Se conservan los checks: si el cliente ya marcó una tarea y el coach
+        corrige una coma, perder el avance sería peor que el error de tipeo.
+        Se reconocen por el texto que tenían antes de la edición.
+        """
+        with db_session:
+            roadmap = Roadmap.get(token=token)
+            if roadmap is None:
+                raise HTTPException(status_code=404, detail="No existe ese roadmap.")
+
+            marcadas = {
+                (s.orden, t.orden)
+                for s in roadmap.semanas
+                for t in s.tareas
+                if t.hecha
+            }
+            hechas_por_texto = {
+                t.tarea.strip(): t.hecha_en
+                for s in roadmap.semanas
+                for t in s.tareas
+                if t.hecha
+            }
+
+            datos = {
+                "titulo": (body.titulo or "").strip(),
+                "mes": (body.mes or "").strip(),
+                "meta_mes": body.meta_mes or "",
+                "foco_mes": body.foco_mes or "",
+                "avatar": body.avatar or "",
+                "como_trabajamos": body.como_trabajamos or "",
+                "semanas": [
+                    {
+                        "etiqueta": s.etiqueta,
+                        "nombre": s.nombre,
+                        "tareas": [{"tarea": t.tarea, "quien": t.quien} for t in s.tareas],
+                        "entregables": [{"texto": e.texto, "url": e.url} for e in s.entregables],
+                    }
+                    for s in body.semanas
+                ],
+            }
+
+            estado_previo = roadmap.estado
+            if body.llamada_url is not None:
+                roadmap.llamada_url = body.llamada_url.strip()
+            self.guardar_generacion(roadmap, datos)
+            # guardar_generacion deja el roadmap listo para revisar; una corrección
+            # sobre algo ya entregado no lo devuelve a revisión.
+            if estado_previo == ESTADO_ENTREGADO:
+                roadmap.estado = ESTADO_ENTREGADO
+
+            for semana in roadmap.semanas:
+                for tarea in semana.tareas:
+                    if (semana.orden, tarea.orden) in marcadas or tarea.tarea.strip() in hechas_por_texto:
+                        tarea.hecha = True
+                        tarea.hecha_en = hechas_por_texto.get(tarea.tarea.strip()) or datetime.utcnow()
+
+            return self._armar_detalle(roadmap)
+
     def eliminar(self, token: str) -> None:
         """Borra el roadmap y todo lo que cuelga de él. No hay papelera: si el
         coach lo borra es porque se equivocó de canal o quedó de una prueba."""

@@ -296,3 +296,187 @@
     font-size: 27px;
   }
 }
+
+/* ——— Edición ———
+   Los campos se ven como el texto que reemplazan: editar tiene que sentirse
+   como escribir en el documento, no como llenar un formulario aparte. */
+.editable {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: var(--text);
+  letter-spacing: inherit;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 4px 8px;
+  resize: none;
+  overflow: hidden;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.editable:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.editable:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(230, 57, 70, 0.5);
+}
+
+.editable::placeholder {
+  color: var(--text-4);
+}
+
+.e-titulo {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  padding: 6px 10px;
+}
+
+.e-dato {
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+
+.e-semana-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.e-etiqueta {
+  flex: none;
+  width: 140px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--brand-hi);
+  background: var(--brand-subtle);
+}
+
+.e-nombre {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.e-tarea {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.e-linea {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.e-url {
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.e-entregable {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.e-entregable .e-linea {
+  flex: 1;
+  min-width: 160px;
+}
+
+/* Quién ejecuta: un interruptor, no un desplegable. Son dos opciones. */
+.e-quien {
+  flex: none;
+  margin-top: 3px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-4);
+  cursor: pointer;
+  width: 74px;
+  text-align: center;
+}
+
+.e-quien.on {
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
+  color: var(--brand);
+}
+
+.e-quitar {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: 3px;
+  border-radius: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--text-4);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.e-quitar:hover {
+  background: var(--brand-soft);
+  color: var(--brand-hi);
+}
+
+.e-agregar {
+  margin-top: 10px;
+  padding: 7px 13px;
+  border-radius: var(--r-xs);
+  border: 1px dashed var(--border);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.e-agregar:hover {
+  border-color: rgba(230, 57, 70, 0.45);
+  color: var(--text);
+}
+
+.e-agregar--bloque {
+  display: block;
+  width: 100%;
+  margin-top: 32px;
+  padding-block: 14px;
+}
+
+.doc--editando .tareas li {
+  align-items: flex-start;
+  padding-inline: 0;
+}
+
+.doc--editando .tareas li:hover {
+  background: transparent;
+}
+
+.revision-acciones {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}

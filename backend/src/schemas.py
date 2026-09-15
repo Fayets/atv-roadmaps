@@ -136,6 +136,36 @@ class RoadmapDetalleResponse(BaseModel):
     tareas_hechas: int = 0
 
 
+class TareaEditarSchema(BaseModel):
+    tarea: str
+    quien: str = "cliente"
+
+
+class EntregableEditarSchema(BaseModel):
+    texto: str
+    url: str | None = None
+
+
+class SemanaEditarSchema(BaseModel):
+    etiqueta: str = ""
+    nombre: str = ""
+    tareas: list[TareaEditarSchema] = []
+    entregables: list[EntregableEditarSchema] = []
+
+
+class RoadmapEditarRequest(BaseModel):
+    """El documento completo tal como quedó después de que el coach lo corrigió."""
+
+    titulo: str | None = None
+    llamada_url: str | None = None
+    mes: str | None = None
+    meta_mes: str | None = None
+    foco_mes: str | None = None
+    avatar: str | None = None
+    como_trabajamos: str | None = None
+    semanas: list[SemanaEditarSchema] = []
+
+
 class TareaCheckRequest(BaseModel):
     hecha: bool
 

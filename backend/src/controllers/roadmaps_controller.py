@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from src.deps import get_current_coach
 from src.schemas import (RoadmapCreadoResponse, RoadmapCrearRequest, RoadmapDetalleResponse,
-                         RoadmapListItem, TareaCheckRequest)
+                         RoadmapEditarRequest, RoadmapListItem, TareaCheckRequest)
 from src.services.roadmaps_services import RoadmapsServices
 
 router = APIRouter()
@@ -47,6 +47,16 @@ def entregar(token: str, coach: str = Depends(get_current_coach)):
         raise e
     except Exception:
         raise HTTPException(status_code=500, detail="Error inesperado al entregar el roadmap.")
+
+
+@router.put("/{token}", response_model=RoadmapDetalleResponse)
+def editar(token: str, body: RoadmapEditarRequest, coach: str = Depends(get_current_coach)):
+    try:
+        return service.editar(token, body)
+    except HTTPException as e:
+        raise e
+    except Exception:
+        raise HTTPException(status_code=500, detail="Error inesperado al guardar el roadmap.")
 
 
 @router.delete("/{token}", status_code=204)
