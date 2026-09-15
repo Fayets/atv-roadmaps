@@ -56,11 +56,23 @@ def vencer_si_no_volvio(roadmap) -> None:
     roadmap.actualizado_en = datetime.utcnow()
 
 
-def _plano(valor) -> str:
-    """El valor de una respuesta como texto corrido, para el bloque legible."""
+def _legible(pregunta_id: str, valor) -> str:
+    """El valor como lo leería una persona.
+
+    En las preguntas de opción, adentro se guarda el `id` (`ads`, `si`); al
+    agente le sirve más la etiqueta que vio el cliente ("Ads", "Sí, tengo una
+    lista"), que es lo que le da sentido a la respuesta.
+    """
+    from src.formulario import buscar_pregunta
+
+    pregunta = buscar_pregunta(pregunta_id) or {}
+    etiquetas = {o["id"]: o["label"] for o in pregunta.get("opciones", [])}
+
     if isinstance(valor, list):
-        return ", ".join(str(v) for v in valor)
-    return "" if valor is None else str(valor)
+        return ", ".join(etiquetas.get(str(v), str(v)) for v in valor)
+    if valor is None:
+        return ""
+    return etiquetas.get(str(valor), str(valor))
 
 
 class IAServices:
@@ -120,13 +132,16 @@ class IAServices:
                 }
             )
 
-        # Dos formas más de leer lo mismo. La lista de arriba es el contrato,
-        # pero los agentes que arman el prompt con plantillas necesitan o un
-        # mapa por id o un bloque de texto ya listo para pegar.
+        # Otras formas de leer lo mismo. La lista de arriba es el contrato, pero
+        # las plantillas de trigger necesitan valores sueltos en la raíz.
         por_id = {r["id"]: r["valor"] for r in respuestas}
-        texto = "\n".join(
-            f"{r['pregunta']} {_plano(r['valor'])}" for r in respuestas
-        )
+        legibles = [_legible(r["id"], r["valor"]) for r in respuestas]
+        texto = "\n".join(f"{r['pregunta']} {v}" for r, v in zip(respuestas, legibles))
+
+        # q1..qN, por posición: así lo espera la plantilla del trigger de utari
+        # (`{{payload.q1}}`). Por posición y no por nombre para que agregar o
+        # sacar una pregunta del formulario no rompa el mapeo del otro lado.
+        por_posicion = {f"q{i + 1}": v for i, v in enumerate(legibles)}
 
         return {
             "roadmap_id": roadmap.token,
@@ -143,6 +158,12 @@ class IAServices:
             "respuestas_por_id": por_id,
             "formulario_texto": texto,
             "callback_url": f"{CALLBACK_BASE}/api/ia/callback" if CALLBACK_BASE else None,
+            # Las plantillas de trigger suelen leer las variables de la raíz del
+            # body o de `data`. Se mandan en los tres lugares para no depender de
+            # cómo esté atado del otro lado; sobra información, no falta.
+            "data": por_id,
+            **por_posicion,
+            **por_id,
         }
 
     # ——— llamada ———
