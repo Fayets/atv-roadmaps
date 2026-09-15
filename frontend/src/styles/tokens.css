@@ -6,8 +6,8 @@
  * Los valores están copiados de `atv-onboarding/frontend/src/index.css` para que
  * las dos pantallas se vean como el mismo producto.
  *
- * Todo esto lo ve el cliente, así que va en Poppins (regla de marca). El
- * onboarding todavía está en Inter.
+ * Tipografía Inter, la misma que ATV Ops: esto se usa muchas horas y manda lo
+ * que se lee cómodo, no la tipografía de marca.
  */
 :root {
   /* Fondo */
@@ -27,11 +27,11 @@
   --border-strong: rgba(255, 255, 255, 0.14);
   --border-accent: rgba(230, 57, 70, 0.4);
 
-  /* Texto */
-  --text: #ffffff;
-  --text-2: rgba(255, 255, 255, 0.65);
-  --text-3: rgba(255, 255, 255, 0.45);
-  --text-4: rgba(255, 255, 255, 0.28);
+  /* Texto. Subido de contraste: sobre el fondo rojo, el 45% no se leía. */
+  --text: #f4f4f5;
+  --text-2: rgba(255, 255, 255, 0.78);
+  --text-3: rgba(255, 255, 255, 0.58);
+  --text-4: rgba(255, 255, 255, 0.42);
 
   /* Rojo ATV */
   --brand: #e63946;
@@ -59,8 +59,12 @@
   --r-xs: 8px;
   --r-pill: 9999px;
 
-  --font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
   --sidebar-w: 232px;
-  --content-max: 1080px;
+  --content-max: 960px;
+
+  /* Fondo de la consola: casi plano, como ATV Ops. El glow fuerte queda para
+     las pantallas del cliente, donde hay una sola tarjeta y no estorba. */
+  --consola-bg: #161214;
 }
