@@ -58,23 +58,14 @@ BLOQUES = [
             {
                 "id": "como_consigue_clientes",
                 "label": "¿Cómo conseguís clientes hoy?",
-                "tipo": "opcion",
-                "opciones": [
-                    {"id": "organico", "label": "Orgánico"},
-                    {"id": "ads", "label": "Ads"},
-                    {"id": "referencias", "label": "Referencias"},
-                    {"id": "todo", "label": "Todo a la vez"},
-                ],
+                "ayuda": "Orgánico, ads, referencias, o todo a la vez. Contá cómo te llegan.",
+                "tipo": "texto_largo",
             },
             {
                 "id": "lista_contactables",
                 "label": "¿Tenés una lista de clientes pasados o leads con los que podrías contactarte esta semana?",
-                "tipo": "opcion",
-                "opciones": [
-                    {"id": "si", "label": "Sí, tengo una lista"},
-                    {"id": "algunos", "label": "Algunos, sueltos"},
-                    {"id": "no", "label": "No tengo"},
-                ],
+                "ayuda": "Si tenés, decí más o menos cuántos y de dónde salieron.",
+                "tipo": "texto_largo",
             },
         ],
     },
