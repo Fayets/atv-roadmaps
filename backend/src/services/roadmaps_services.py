@@ -225,6 +225,25 @@ class RoadmapsServices:
             roadmap.actualizado_en = datetime.utcnow()
             return self._armar_detalle(roadmap)
 
+    def eliminar(self, token: str) -> None:
+        """Borra el roadmap y todo lo que cuelga de él. No hay papelera: si el
+        coach lo borra es porque se equivocó de canal o quedó de una prueba."""
+        with db_session:
+            roadmap = Roadmap.get(token=token)
+            if roadmap is None:
+                raise HTTPException(status_code=404, detail="No existe ese roadmap.")
+            for semana in list(roadmap.semanas):
+                for tarea in list(semana.tareas):
+                    tarea.delete()
+                for entregable in list(semana.entregables):
+                    entregable.delete()
+                semana.delete()
+            for respuesta in list(roadmap.respuestas):
+                respuesta.delete()
+            for generacion in list(roadmap.generaciones):
+                generacion.delete()
+            roadmap.delete()
+
     # ——— guardar lo que devolvió la IA ———
 
     def guardar_generacion(self, roadmap, datos: dict) -> None:

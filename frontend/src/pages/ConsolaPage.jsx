@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Consola from '../components/Consola.jsx'
-import { ESTADOS, desdeAhora, listarRoadmaps, sesion } from '../api.js'
+import { ESTADOS, desdeAhora, eliminarRoadmap, listarRoadmaps, sesion } from '../api.js'
 import './consola-page.css'
 
 export default function ConsolaPage() {
@@ -58,7 +58,14 @@ export default function ConsolaPage() {
       {visibles.length > 0 && (
         <div className="docs">
           {visibles.map((r) => (
-            <Documento key={r.token} roadmap={r} onAbrir={() => navegar(`/r/${r.token}`)} />
+            <Documento
+              key={r.token}
+              roadmap={r}
+              onAbrir={() => navegar(`/r/${r.token}`)}
+              onEliminar={() =>
+                setRoadmaps((prev) => prev.filter((x) => x.token !== r.token))
+              }
+            />
           ))}
         </div>
       )}
@@ -66,17 +73,24 @@ export default function ConsolaPage() {
   )
 }
 
-function Documento({ roadmap, onAbrir }) {
+function Documento({ roadmap, onAbrir, onEliminar }) {
   const estado = ESTADOS[roadmap.estado] || { label: roadmap.estado, clase: '' }
   const [menu, setMenu] = useState(false)
   const [copiado, setCopiado] = useState(false)
+  // Borrar no se deshace, así que el menú pide confirmación en el lugar en vez
+  // de abrir un diálogo del navegador.
+  const [confirmando, setConfirmando] = useState(false)
+  const [borrando, setBorrando] = useState(false)
   const caja = useRef(null)
 
   // Un menú abierto que no se cierra al hacer clic afuera es una molestia.
   useEffect(() => {
     if (!menu) return undefined
     const cerrar = (e) => {
-      if (!caja.current?.contains(e.target)) setMenu(false)
+      if (!caja.current?.contains(e.target)) {
+        setMenu(false)
+        setConfirmando(false)
+      }
     }
     document.addEventListener('mousedown', cerrar)
     return () => document.removeEventListener('mousedown', cerrar)
@@ -92,6 +106,17 @@ function Documento({ roadmap, onAbrir }) {
       }, 1200)
     } catch {
       setMenu(false)
+    }
+  }
+
+  async function borrar() {
+    setBorrando(true)
+    try {
+      await eliminarRoadmap(roadmap.token)
+      onEliminar()
+    } catch {
+      setBorrando(false)
+      setConfirmando(false)
     }
   }
 
@@ -143,6 +168,15 @@ function Documento({ roadmap, onAbrir }) {
             <button type="button" onClick={copiarLink}>
               {copiado ? 'Link copiado' : 'Copiar link del formulario'}
             </button>
+            {confirmando ? (
+              <button type="button" className="peligro" disabled={borrando} onClick={borrar}>
+                {borrando ? 'Eliminando…' : '¿Seguro? Eliminar'}
+              </button>
+            ) : (
+              <button type="button" className="peligro" onClick={() => setConfirmando(true)}>
+                Eliminar
+              </button>
+            )}
           </div>
         )}
       </div>

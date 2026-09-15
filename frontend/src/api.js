@@ -36,6 +36,7 @@ export const crearRoadmap = (datos) =>
   pedir('/roadmaps/', { method: 'POST', body: JSON.stringify(datos) })
 export const verRoadmap = (token) => pedir(`/roadmaps/${token}`)
 export const entregarRoadmap = (token) => pedir(`/roadmaps/${token}/entregar`, { method: 'POST' })
+export const eliminarRoadmap = (token) => pedir(`/roadmaps/${token}`, { method: 'DELETE' })
 export const regenerar = (token) => pedir(`/ia/${token}/generar`, { method: 'POST' })
 export const estadoGeneracion = (token) => pedir(`/ia/${token}/estado`)
 

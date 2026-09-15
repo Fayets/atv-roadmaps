@@ -213,3 +213,17 @@
   background: rgba(255, 255, 255, 0.07);
   color: var(--text);
 }
+
+.doc-menu-caja .peligro {
+  color: var(--brand-hi);
+}
+
+.doc-menu-caja .peligro:hover {
+  background: var(--brand-soft);
+  color: var(--brand-hi);
+}
+
+.doc-menu-caja .peligro:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

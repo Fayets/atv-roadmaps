@@ -49,6 +49,16 @@ def entregar(token: str, coach: str = Depends(get_current_coach)):
         raise HTTPException(status_code=500, detail="Error inesperado al entregar el roadmap.")
 
 
+@router.delete("/{token}", status_code=204)
+def eliminar(token: str, coach: str = Depends(get_current_coach)):
+    try:
+        service.eliminar(token)
+    except HTTPException as e:
+        raise e
+    except Exception:
+        raise HTTPException(status_code=500, detail="Error inesperado al eliminar el roadmap.")
+
+
 @router.post("/{token}/tareas/{tarea_id}", response_model=RoadmapDetalleResponse)
 def marcar_tarea(token: str, tarea_id: int, body: TareaCheckRequest, coach: str = Depends(get_current_coach)):
     try:
