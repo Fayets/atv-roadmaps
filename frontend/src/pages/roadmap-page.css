@@ -1,0 +1,298 @@
+/*
+ * El entregable: misma estructura que el Notion real de ATV ("Próximos pasos").
+ * Cabecera del mes, y después un bloque por semana con tareas marcables y los
+ * entregables. La piel es la del onboarding: vidrio sobre el fondo con glow.
+ */
+.doc-page {
+  padding-block: 40px 80px;
+  padding-inline: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.doc {
+  width: 100%;
+  max-width: 800px;
+  align-self: flex-start;
+}
+
+.doc-cover {
+  height: 72px;
+  background:
+    radial-gradient(ellipse 60% 140% at 50% 0%, rgba(255, 255, 255, 0.16), transparent 70%),
+    linear-gradient(115deg, var(--brand-dark) 0%, var(--brand) 55%, #ff6a56 100%);
+}
+
+.doc-inner {
+  padding: 34px 42px 60px;
+}
+
+.doc-titulo {
+  font-size: 34px;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+}
+
+.doc-sub {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.doc-llamada {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--text-2);
+  word-break: break-all;
+}
+
+.doc-llamada a {
+  color: var(--brand-hi);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+.doc-llamada a:hover {
+  border-bottom-color: var(--brand-hi);
+}
+
+/* ——— Cabecera del mes: meta, foco, avatar, cómo trabajamos ——— */
+.brief {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dato {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-2);
+  max-width: 68ch;
+}
+
+.dato b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* "Cómo trabajamos" es el párrafo largo que explica el modelo: se destaca. */
+.dato--bloque {
+  background: var(--brand-subtle);
+  border-left: 3px solid var(--brand);
+  border-radius: var(--r-xs);
+  padding: 16px 18px;
+  max-width: none;
+}
+
+/* ——— Semana ——— */
+.semana {
+  margin-top: 44px;
+}
+
+/* El título rojo del Notion, traducido al sistema del onboarding. */
+.semana-titulo {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--brand-hi);
+  background: var(--brand-subtle);
+  border: 1px solid rgba(230, 57, 70, 0.28);
+  border-radius: var(--r-xs);
+  padding: 8px 14px;
+}
+
+.tareas {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tareas li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: var(--r-xs);
+  font-size: 14px;
+  line-height: 1.6;
+  transition: background 0.15s ease;
+}
+
+.tareas li:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.tareas li.hecha .tarea-texto {
+  color: var(--text-4);
+}
+
+.tarea-texto {
+  color: var(--text-2);
+  flex: 1;
+  min-width: 0;
+}
+
+/* El "(nosotros hacemos)" del Notion, como etiqueta en vez de paréntesis. */
+.quien {
+  display: inline-block;
+  margin-left: 9px;
+  vertical-align: 2px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand);
+  background: var(--brand-soft);
+  border: 1px solid var(--brand-line);
+  border-radius: var(--r-pill);
+  padding: 2px 9px;
+  white-space: nowrap;
+}
+
+.box {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  flex: none;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.box:hover:not(:disabled) {
+  border-color: rgba(230, 57, 70, 0.55);
+}
+
+.box.on {
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  border-color: transparent;
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.4);
+}
+
+.box.on::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  color: #fff;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.box:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+/* ——— Entregables de la semana ——— */
+.entregables {
+  margin-top: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.entregables h3 {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-4);
+}
+
+.entregables ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.entregables li {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.entregables li::marker {
+  color: var(--brand);
+}
+
+.entregables a {
+  color: var(--brand-hi);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(230, 57, 70, 0.3);
+}
+
+.entregables a:hover {
+  border-bottom-color: var(--brand-hi);
+}
+
+/* ——— Pie ——— */
+.doc-foot {
+  margin-top: 48px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.avance {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.avance b {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.avance-error {
+  margin-top: 20px;
+}
+
+.revision {
+  padding: 20px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.revision b {
+  font-size: 14px;
+}
+
+.revision p {
+  font-size: 12.5px;
+  color: var(--text-4);
+  margin-top: 3px;
+}
+
+@media (max-width: 640px) {
+  .doc-inner {
+    padding: 26px 20px 48px;
+  }
+
+  .doc-titulo {
+    font-size: 27px;
+  }
+}

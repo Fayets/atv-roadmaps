@@ -1,0 +1,313 @@
+/*
+ * Lo que ve el cliente: formulario y roadmap.
+ * Mismo sistema que atv-onboarding — shell-card sobre el fondo con glow, los
+ * pasos con dots rojos y el acento en #e63946.
+ */
+.cliente-page {
+  display: flex;
+  justify-content: center;
+  padding-block: 44px 72px;
+  padding-inline: 20px;
+}
+
+.cliente-cargando {
+  color: var(--text-3);
+  font-size: 14px;
+  padding-block: 80px;
+}
+
+.cliente-card {
+  width: 100%;
+  max-width: 660px;
+  align-self: flex-start;
+}
+
+.cliente-head {
+  padding: 28px 32px 22px;
+  border-bottom: 1px solid var(--border-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.cliente-head .brandline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.cliente-head .lg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cliente-head .lg .sq {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.cliente-head .lg strong {
+  font-size: 11.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+.cliente-head h1 {
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.cliente-lede {
+  font-size: 13.5px;
+  color: var(--text-3);
+  max-width: 54ch;
+  line-height: 1.65;
+}
+
+/* Dots del onboarding: el activo se estira y prende. */
+.prog {
+  display: flex;
+  gap: 7px;
+  margin-top: 6px;
+}
+
+.prog i {
+  height: 4px;
+  width: 22px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 255, 255, 0.12);
+  display: block;
+  transition:
+    width 0.25s ease,
+    background 0.25s ease;
+}
+
+.prog i.done {
+  background: rgba(230, 57, 70, 0.45);
+}
+
+.prog i.now {
+  width: 48px;
+  background: var(--brand);
+  box-shadow: 0 0 8px rgba(230, 57, 70, 0.6);
+}
+
+.stepline {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-4);
+}
+
+.stepline b {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+.cliente-body {
+  padding: 28px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.q {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.q label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.q .help {
+  font-size: 12.5px;
+  color: var(--text-4);
+  margin-top: -5px;
+  line-height: 1.5;
+}
+
+.field {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px 14px;
+  font-size: 13.5px;
+  font-family: inherit;
+  color: var(--text);
+  width: 100%;
+  letter-spacing: -0.01em;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.field::placeholder {
+  color: var(--text-4);
+}
+
+.field:focus {
+  outline: none;
+  border-color: rgba(230, 57, 70, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 12px rgba(230, 57, 70, 0.12);
+}
+
+.field.ta {
+  min-height: 90px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font-size: 12.5px;
+  padding: 9px 15px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-2);
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: -0.01em;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.chip:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: var(--text);
+}
+
+.chip.on {
+  background: var(--brand-soft);
+  border-color: rgba(230, 57, 70, 0.5);
+  color: var(--text);
+  font-weight: 500;
+  box-shadow: 0 0 12px rgba(230, 57, 70, 0.15);
+}
+
+.cliente-error {
+  border: 1px solid var(--brand-line);
+  background: var(--brand-soft);
+  color: var(--text);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+}
+
+.cliente-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-soft);
+  flex-wrap: wrap;
+}
+
+.cliente-foot .nota {
+  font-size: 11.5px;
+  color: var(--text-4);
+}
+
+.cliente-acciones {
+  display: flex;
+  gap: 9px;
+}
+
+.btn-cliente {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  border: 0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 12px 24px;
+  border-radius: var(--r-sm);
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(230, 57, 70, 0.28);
+  transition: transform 0.15s ease;
+}
+
+.btn-cliente:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn-cliente:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-cliente-sec {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-2);
+  font-size: 13.5px;
+  padding: 12px 20px;
+  border-radius: var(--r-sm);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn-cliente-sec:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+}
+
+.cliente-gracias {
+  align-items: center;
+  text-align: center;
+  padding-block: 58px;
+  gap: 16px;
+}
+
+.cliente-gracias .tilde {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--ok-dim);
+  border: 1px solid var(--ok-line);
+  color: var(--ok);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.15);
+}
+
+@media (max-width: 560px) {
+  .cliente-head,
+  .cliente-body {
+    padding-inline: 20px;
+  }
+}

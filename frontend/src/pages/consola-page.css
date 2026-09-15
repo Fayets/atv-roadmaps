@@ -1,0 +1,158 @@
+/* La acción principal: el botón grande del onboarding, a ancho completo. */
+.btn-hero {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 28px 24px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: var(--r-lg);
+  border: 0;
+  color: #fff;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  box-shadow:
+    0 8px 32px rgba(230, 57, 70, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Misma hairline clara que corona las shell-card. */
+.btn-hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  pointer-events: none;
+}
+
+.btn-hero:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 40px rgba(230, 57, 70, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.btn-hero:active {
+  transform: translateY(0);
+}
+
+.btn-hero .plus {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1;
+  flex: none;
+}
+
+.btn-hero small {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 400;
+  opacity: 0.82;
+  letter-spacing: 0;
+  margin-top: 3px;
+}
+
+/* La lista, dentro de una shell-card. */
+.tabla-card {
+  padding: 6px 4px;
+}
+
+.tabla-wrap {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 640px;
+}
+
+.tabla th {
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-4);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.tabla td {
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.tabla tbody tr {
+  transition: background 0.15s ease;
+}
+
+.tabla tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.cli {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+}
+
+.cli .av {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-3);
+  flex: none;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.cli .nm {
+  display: block;
+  font-weight: 500;
+}
+
+.cli .ch {
+  display: block;
+  font-size: 11px;
+  color: var(--text-4);
+}
+
+.cli:hover .nm {
+  color: var(--brand-hi);
+}
+
+.cli:hover .av {
+  border-color: rgba(230, 57, 70, 0.45);
+  color: var(--brand);
+}

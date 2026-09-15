@@ -1,0 +1,267 @@
+/* Selector de canales y link, sobre shell-card. */
+.picker {
+  display: grid;
+  grid-template-columns: 196px 1fr;
+}
+
+.picker .cats {
+  border-right: 1px solid var(--border-soft);
+  background: var(--sidebar);
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cats .lbl {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-4);
+  padding: 4px 9px 10px;
+}
+
+.cats button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  font-size: 12.5px;
+  padding: 8px 10px;
+  border-radius: var(--r-sm);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-3);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.cats button:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-2);
+}
+
+.cats button.on {
+  background: var(--brand-soft);
+  border-color: rgba(230, 57, 70, 0.35);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.cats button .c {
+  font-size: 10.5px;
+  color: var(--text-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.picker-body {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  min-width: 0;
+}
+
+.search {
+  padding: 11px 14px;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  color: var(--text);
+  font-family: inherit;
+  letter-spacing: -0.01em;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.search::placeholder {
+  color: var(--text-4);
+}
+
+.search:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.28);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.chan-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.chan {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.chan:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.chan.sel {
+  background: var(--brand-soft);
+  border-color: rgba(230, 57, 70, 0.45);
+  box-shadow: 0 0 16px rgba(230, 57, 70, 0.1);
+}
+
+.chan .hash {
+  color: var(--text-4);
+  font-size: 14px;
+  flex: none;
+}
+
+.chan.sel .hash {
+  color: var(--brand);
+}
+
+.chan .who {
+  flex: 1;
+  min-width: 0;
+}
+
+.chan .who b {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.chan .who small {
+  display: block;
+  font-size: 11px;
+  color: var(--text-4);
+}
+
+.chan .meta {
+  font-size: 11px;
+  color: var(--text-4);
+  text-align: right;
+  flex: none;
+}
+
+.picker-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-soft);
+  font-size: 12px;
+}
+
+.picker-foot b {
+  color: var(--text);
+}
+
+/* Pantalla del link generado. */
+.linkcard {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.linkcard h2 {
+  font-size: 19px;
+}
+
+.linkrow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.linkbox {
+  flex: 1;
+  min-width: 220px;
+  padding: 13px 15px;
+  border-radius: var(--r-sm);
+  background: rgba(230, 57, 70, 0.07);
+  border: 1px solid var(--brand-line);
+  font-size: 13.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sendrow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sendrow .btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.linkcard .nota {
+  font-size: 12px;
+  border-top: 1px solid var(--border-soft);
+  padding-top: 15px;
+  color: var(--text-4);
+}
+
+@media (max-width: 700px) {
+  .picker {
+    grid-template-columns: 1fr;
+  }
+
+  .picker .cats {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-soft);
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .cats .lbl {
+    display: none;
+  }
+}
+
+/* El coach pega acá la llamada de la que sale el roadmap: es el contexto más
+   valioso que recibe la IA además del formulario. */
+.llamada {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding-top: 4px;
+}
+
+.llamada > span {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+.llamada i {
+  font-style: normal;
+  color: var(--text-4);
+}

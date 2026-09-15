@@ -1,0 +1,66 @@
+/*
+ * ATV Roadmaps — design tokens.
+ *
+ * Mismo sistema visual que atv-onboarding: fondo casi negro con glow rojo,
+ * tarjetas de vidrio (shell-card / glass-card) y el rojo ATV como único acento.
+ * Los valores están copiados de `atv-onboarding/frontend/src/index.css` para que
+ * las dos pantallas se vean como el mismo producto.
+ *
+ * Todo esto lo ve el cliente, así que va en Poppins (regla de marca). El
+ * onboarding todavía está en Inter.
+ */
+:root {
+  /* Fondo */
+  --bg: #0a0505;
+  --bg-deep: #000000;
+
+  /* Superficies de vidrio */
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface-2: rgba(255, 255, 255, 0.05);
+  --surface-3: rgba(255, 255, 255, 0.07);
+  --shell: rgba(18, 18, 18, 0.95);
+  --sidebar: rgba(255, 255, 255, 0.02);
+
+  /* Bordes */
+  --border: rgba(255, 255, 255, 0.07);
+  --border-soft: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --border-accent: rgba(230, 57, 70, 0.4);
+
+  /* Texto */
+  --text: #ffffff;
+  --text-2: rgba(255, 255, 255, 0.65);
+  --text-3: rgba(255, 255, 255, 0.45);
+  --text-4: rgba(255, 255, 255, 0.28);
+
+  /* Rojo ATV */
+  --brand: #e63946;
+  --brand-dark: #c1121f;
+  --brand-hi: #ff4d58;
+  --brand-glow: rgba(230, 57, 70, 0.35);
+  --brand-soft: rgba(230, 57, 70, 0.1);
+  --brand-subtle: rgba(230, 57, 70, 0.07);
+  --brand-line: rgba(230, 57, 70, 0.45);
+
+  /* Semánticos */
+  --ok: #4ade80;
+  --ok-dim: rgba(74, 222, 128, 0.12);
+  --ok-line: rgba(74, 222, 128, 0.3);
+  --warn: #fbbf24;
+  --warn-dim: rgba(251, 191, 36, 0.12);
+  --warn-line: rgba(251, 191, 36, 0.3);
+  --info: #60a5fa;
+  --info-dim: rgba(96, 165, 250, 0.12);
+  --info-line: rgba(96, 165, 250, 0.3);
+
+  --r-lg: 18px;
+  --r: 14px;
+  --r-sm: 10px;
+  --r-xs: 8px;
+  --r-pill: 9999px;
+
+  --font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --sidebar-w: 232px;
+  --content-max: 1080px;
+}

@@ -1,0 +1,1029 @@
+<title>ATV Roadmaps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+<style>
+  :root{
+    /* Mismo sistema que atv-onboarding: casi negro con glow rojo y vidrio. */
+    --ink:#0a0505; --panel:rgba(18,18,18,.95); --panel-2:rgba(255,255,255,.03); --panel-3:rgba(255,255,255,.06);
+    --line:rgba(255,255,255,.08); --line-soft:rgba(255,255,255,.06);
+    --text:#ffffff; --text-2:rgba(255,255,255,.65); --text-3:rgba(255,255,255,.45);
+    --brand:#e63946; --brand-hi:#ff4d58;
+    --brand-dim:rgba(230,57,70,.10); --brand-line:rgba(230,57,70,.45);
+    --ok:#4ade80; --ok-dim:rgba(74,222,128,.12);
+    --warn:#fbbf24; --warn-dim:rgba(251,191,36,.12);
+    --info:#60a5fa; --info-dim:rgba(96,165,250,.12);
+    /* Lo que ve el cliente ya no va en claro: mismas superficies que el resto. */
+    --paper:#0a0505; --paper-2:rgba(18,18,18,.95); --paper-line:rgba(255,255,255,.07);
+    --paper-ink:#ffffff; --paper-ink-2:rgba(255,255,255,.65); --paper-ink-3:rgba(255,255,255,.45);
+    --r:18px; --r-sm:10px; --r-pill:999px;
+    --font:"Poppins",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --max:1080px;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{
+    margin:0; color:var(--text);
+    background-color:var(--ink);
+    background-image:
+      radial-gradient(ellipse 115% 95% at 50% 30%, transparent 35%, rgba(0,0,0,.48) 100%),
+      radial-gradient(ellipse 85% 45% at 50% 10%, rgba(70,32,32,.36) 0%, rgba(52,22,22,.12) 45%, transparent 72%),
+      radial-gradient(ellipse 95% 60% at 50% 0%, rgba(52,22,22,.7) 0%, rgba(20,10,10,.95) 48%, #000 100%);
+    background-attachment:fixed;
+    font-family:var(--font); font-weight:400; line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--max); margin:0 auto; padding-inline:20px; padding-block:0}
+  h1,h2,h3,h4{margin:0; text-wrap:balance; font-weight:600; letter-spacing:-.02em}
+  p{margin:0}
+  a{color:inherit}
+  .eyebrow{
+    font-size:11px; font-weight:600; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--brand-hi);
+  }
+  .muted{color:var(--text-2)}
+  .dim{color:var(--text-3)}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* ——— cabecera ——— */
+  header.top{
+    border-bottom:1px solid var(--line-soft);
+    background:
+      radial-gradient(ellipse 70% 120% at 12% 0%, rgba(230,57,70,.16) 0%, transparent 62%),
+      transparent;
+  }
+  .top-inner{padding-block:56px 44px; display:flex; flex-direction:column; gap:20px}
+  .brandmark{display:flex; align-items:center; gap:11px}
+  .brandmark .dot{width:10px; height:10px; border-radius:3px; background:var(--brand); box-shadow:0 0 18px rgba(225,43,38,.7)}
+  .brandmark span{font-size:12px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--text-2)}
+  header.top h1{font-size:clamp(34px,6vw,52px); line-height:1.04; font-weight:600}
+  header.top h1 em{font-style:normal; color:var(--brand-hi)}
+  .lede{max-width:58ch; font-size:16px; color:var(--text-2)}
+  .facts{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px}
+  .fact{
+    font-size:11.5px; font-weight:500; padding:5px 11px; border-radius:var(--r-pill);
+    border:1px solid var(--line); color:var(--text-2); background:var(--panel)
+  }
+  .fact b{color:var(--text); font-weight:600}
+
+  /* ——— secciones ——— */
+  section{padding-block:52px; border-bottom:1px solid var(--line-soft)}
+  .sec-head{display:flex; flex-direction:column; gap:9px; margin-bottom:26px; max-width:62ch}
+  .sec-head h2{font-size:25px}
+  .step-tag{
+    display:inline-flex; align-items:center; gap:9px; font-size:11px; font-weight:600;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--text-3);
+  }
+  .step-tag .k{
+    display:inline-grid; place-items:center; width:21px; height:21px; border-radius:6px;
+    background:var(--brand-dim); border:1px solid var(--brand-line); color:var(--brand-hi);
+    font-size:11px; letter-spacing:0;
+  }
+  .sec-head p{font-size:15px; color:var(--text-2)}
+
+  /* ——— marco de pantalla ——— */
+  .screen{
+    position:relative; border:1px solid var(--line); border-radius:var(--r); overflow:hidden;
+    background:var(--panel);
+    box-shadow:0 0 0 1px rgba(230,57,70,.08), 0 8px 40px rgba(0,0,0,.6), 0 2px 8px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.05);
+  }
+  .screen::after{
+    content:""; position:absolute; top:0; left:10%; right:10%; height:1px; z-index:3;
+    background:linear-gradient(90deg, transparent, rgba(230,57,70,.6), transparent); pointer-events:none;
+  }
+  .chrome{
+    display:flex; align-items:center; gap:12px; padding:9px 13px;
+    background:rgba(255,255,255,.02); border-bottom:1px solid var(--line-soft)
+  }
+  .lights{display:flex; gap:6px}
+  .lights i{width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.1); display:block}
+  .url{
+    flex:1; font-size:11.5px; color:var(--text-3); background:var(--ink);
+    border:1px solid var(--line-soft); border-radius:var(--r-pill); padding:4px 12px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis
+  }
+  .url b{color:var(--text-2); font-weight:500}
+
+  /* ——— app shell ——— */
+  .app{display:grid; grid-template-columns:186px 1fr; min-height:440px}
+  .side{background:var(--panel-2); border-right:1px solid var(--line-soft); padding:16px 12px; display:flex; flex-direction:column; gap:20px}
+  .side-brand{display:flex; align-items:center; gap:8px; padding-inline:6px}
+  .side-brand .sq{width:22px; height:22px; border-radius:6px; background:linear-gradient(140deg,var(--brand-hi),var(--brand)); display:grid; place-items:center; font-size:11px; font-weight:700; color:#fff}
+  .side-brand strong{font-size:12.5px; letter-spacing:.04em; font-weight:600}
+  .nav{display:flex; flex-direction:column; gap:2px}
+  .nav a{
+    display:flex; align-items:center; justify-content:space-between; gap:8px;
+    padding:8px 10px; border-radius:var(--r-sm); font-size:13px; color:var(--text-2);
+    text-decoration:none; border:1px solid transparent
+  }
+  .nav a.on{background:var(--brand-dim); border-color:var(--brand-line); color:var(--text); font-weight:500}
+  .nav a .cnt{font-size:11px; color:var(--text-3)}
+  .side-foot{margin-top:auto; display:flex; align-items:center; gap:9px; padding:9px 8px; border-top:1px solid var(--line-soft)}
+  .avatar{width:26px; height:26px; border-radius:50%; background:var(--panel-3); display:grid; place-items:center; font-size:10.5px; font-weight:600; color:var(--text-2)}
+  .side-foot div{line-height:1.25}
+  .side-foot .n{font-size:12px; font-weight:500}
+  .side-foot .r{font-size:10.5px; color:var(--text-3)}
+
+  .main{padding:22px 24px; display:flex; flex-direction:column; gap:20px; min-width:0}
+  .main-head{display:flex; align-items:flex-start; justify-content:space-between; gap:18px; flex-wrap:wrap}
+  .main-head h3{font-size:19px}
+  .main-head .sub{font-size:12.5px; color:var(--text-3); margin-top:3px}
+
+  /* ——— botonera ——— */
+  .btn{
+    font-family:inherit; font-size:13px; font-weight:500; border-radius:var(--r-sm);
+    padding:9px 15px; border:1px solid var(--line); background:var(--panel-3);
+    color:var(--text); cursor:pointer; white-space:nowrap
+  }
+  .btn-primary{
+    border:0; color:#fff; font-weight:600;
+    background:linear-gradient(135deg,var(--brand-hi) 0%,var(--brand) 55%,#b8211d 100%);
+    box-shadow:0 6px 20px rgba(225,43,38,.3)
+  }
+  .btn-hero{
+    width:100%; display:flex; align-items:center; justify-content:center; gap:12px;
+    padding:26px 22px; font-size:17px; font-weight:600; border-radius:var(--r); border:0; color:#fff;
+    background:linear-gradient(135deg,var(--brand-hi) 0%,var(--brand) 52%,#ab1e1a 100%);
+    box-shadow:0 10px 34px rgba(225,43,38,.32), inset 0 1px 0 rgba(255,255,255,.18);
+    cursor:pointer; font-family:inherit; letter-spacing:-.01em
+  }
+  .btn-hero .plus{
+    width:30px; height:30px; border-radius:9px; background:rgba(255,255,255,.17);
+    display:grid; place-items:center; font-size:20px; font-weight:400; line-height:1
+  }
+  .btn-hero small{display:block; font-size:11.5px; font-weight:400; opacity:.82; letter-spacing:0; margin-top:2px}
+
+  /* ——— pills de estado ——— */
+  .pill{
+    display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:500;
+    padding:3px 9px; border-radius:var(--r-pill); border:1px solid var(--line); color:var(--text-2)
+  }
+  .pill::before{content:""; width:5px; height:5px; border-radius:50%; background:currentColor}
+  .pill.warn{color:var(--warn); background:var(--warn-dim); border-color:rgba(217,165,22,.3)}
+  .pill.info{color:var(--info); background:var(--info-dim); border-color:rgba(91,141,239,.3)}
+  .pill.ok{color:var(--ok); background:var(--ok-dim); border-color:rgba(59,191,106,.3)}
+  .pill.brand{color:var(--brand-hi); background:var(--brand-dim); border-color:var(--brand-line)}
+
+  /* ——— tabla de roadmaps ——— */
+  .tablewrap{overflow-x:auto}
+  table.list{width:100%; border-collapse:collapse; font-size:13px; min-width:560px}
+  table.list th{
+    text-align:left; font-size:10.5px; font-weight:600; letter-spacing:.13em;
+    text-transform:uppercase; color:var(--text-3); padding:0 12px 9px; border-bottom:1px solid var(--line-soft)
+  }
+  table.list td{padding:11px 12px; border-bottom:1px solid var(--line-soft); vertical-align:middle}
+  table.list tr:last-child td{border-bottom:0}
+  .cli{display:flex; align-items:center; gap:10px}
+  .cli .av{width:27px; height:27px; border-radius:8px; background:var(--panel-3); display:grid; place-items:center; font-size:10.5px; font-weight:600; color:var(--text-2); flex:none}
+  .cli .nm{font-weight:500}
+  .cli .ch{font-size:11px; color:var(--text-3)}
+
+  /* ——— selector de canales ——— */
+  .picker{display:grid; grid-template-columns:172px 1fr; gap:0; min-height:390px}
+  .picker .cats{border-right:1px solid var(--line-soft); padding:14px 10px; display:flex; flex-direction:column; gap:3px}
+  .cats .lbl{font-size:10px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3); padding:4px 8px 8px}
+  .cats button{
+    display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%;
+    font-family:inherit; font-size:12.5px; padding:7px 9px; border-radius:var(--r-sm);
+    background:transparent; border:1px solid transparent; color:var(--text-2); cursor:pointer; text-align:left
+  }
+  .cats button.on{background:var(--brand-dim); border-color:var(--brand-line); color:var(--text); font-weight:500}
+  .cats button .c{font-size:10.5px; color:var(--text-3); font-variant-numeric:tabular-nums}
+  .picker .body{padding:14px 16px; display:flex; flex-direction:column; gap:12px; min-width:0}
+  .search{
+    display:flex; align-items:center; gap:9px; padding:9px 12px; border-radius:var(--r-sm);
+    background:var(--ink); border:1px solid var(--line); font-size:13px; color:var(--text-3)
+  }
+  .chan-list{display:flex; flex-direction:column; gap:4px; max-height:300px; overflow-y:auto}
+  .chan{
+    display:flex; align-items:center; gap:11px; padding:9px 11px; border-radius:var(--r-sm);
+    border:1px solid transparent; cursor:pointer
+  }
+  .chan:hover{background:var(--panel-2)}
+  .chan.sel{background:var(--brand-dim); border-color:var(--brand-line)}
+  .chan .hash{color:var(--text-3); font-size:13px; flex:none}
+  .chan .who{flex:1; min-width:0}
+  .chan .who b{display:block; font-size:13px; font-weight:500}
+  .chan .who small{display:block; font-size:11px; color:var(--text-3)}
+  .chan .meta{font-size:11px; color:var(--text-3); text-align:right; flex:none}
+
+  /* ——— link generado ——— */
+  .linkcard{
+    border:1px solid var(--brand-line); border-radius:var(--r); padding:22px;
+    background:linear-gradient(160deg,rgba(225,43,38,.10),transparent 58%),var(--panel-2);
+    display:flex; flex-direction:column; gap:15px
+  }
+  .linkrow{display:flex; gap:9px; align-items:stretch; flex-wrap:wrap}
+  .linkbox{
+    flex:1; min-width:220px; padding:12px 14px; border-radius:var(--r-sm);
+    background:var(--ink); border:1px solid var(--line); font-size:13.5px; color:var(--text);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap
+  }
+  .linkbox span{color:var(--text-3)}
+  .sendrow{display:flex; gap:9px; flex-wrap:wrap}
+
+  /* ——— formulario del cliente (papel) ——— */
+  .paper{background:var(--paper); color:var(--paper-ink); min-height:460px}
+  .paper .phead{
+    padding:24px 30px 20px; border-bottom:1px solid var(--paper-line); background:rgba(255,255,255,.02);
+    display:flex; flex-direction:column; gap:12px
+  }
+  .phead .brandline{display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap}
+  .phead .brandline .lg{display:flex; align-items:center; gap:9px}
+  .phead .lg .sq{width:22px; height:22px; border-radius:6px; background:linear-gradient(140deg,var(--brand-hi),var(--brand)); display:grid; place-items:center; color:#fff; font-size:11px; font-weight:700}
+  .phead .lg strong{font-size:11.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--paper-ink-3); font-weight:600}
+  .phead h3{font-size:22px; color:var(--paper-ink)}
+  .phead .psub{font-size:13.5px; color:var(--paper-ink-2); max-width:56ch}
+  .prog{display:flex; gap:6px; margin-top:4px}
+  .prog i{height:4px; width:22px; border-radius:999px; background:rgba(255,255,255,.12); display:block}
+  .prog i.done{background:rgba(230,57,70,.45)}
+  .prog i.now{width:48px; background:var(--brand); box-shadow:0 0 8px rgba(230,57,70,.6)}
+  .stepline{display:flex; justify-content:space-between; font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--paper-ink-3)}
+  .stepline b{color:var(--brand); font-weight:600}
+  .pbody{padding:24px 28px 28px; display:flex; flex-direction:column; gap:20px}
+  .q{display:flex; flex-direction:column; gap:7px}
+  .q label{font-size:13.5px; font-weight:600; color:var(--paper-ink)}
+  .q .help{font-size:12px; color:var(--paper-ink-3); margin-top:-3px}
+  .field{
+    border:1px solid rgba(255,255,255,.08); border-radius:10px; background:rgba(255,255,255,.04);
+    padding:12px 14px; font-size:13.5px; color:var(--paper-ink); min-height:44px
+  }
+  .field.filled{border-color:rgba(255,255,255,.14)}
+  .field.ph{color:var(--paper-ink-3)}
+  .field.ta{min-height:76px; line-height:1.5}
+  .chips{display:flex; flex-wrap:wrap; gap:7px}
+  .chip{
+    font-size:12.5px; padding:9px 15px; border-radius:var(--r-pill);
+    border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); color:var(--paper-ink-2)
+  }
+  .chip.on{background:var(--brand-dim); border-color:rgba(230,57,70,.5); color:#fff; font-weight:500; box-shadow:0 0 12px rgba(230,57,70,.15)}
+  .pfoot{display:flex; align-items:center; justify-content:space-between; gap:14px; padding-top:6px; border-top:1px solid var(--paper-line); flex-wrap:wrap}
+  .pfoot .note{font-size:11.5px; color:var(--paper-ink-3)}
+  .btn-paper{background:linear-gradient(135deg,#e63946,#c1121f); border:0; color:#fff; font-weight:600; font-size:13.5px; padding:12px 24px; border-radius:10px; font-family:inherit; cursor:pointer; box-shadow:0 4px 16px rgba(230,57,70,.28)}
+
+  /* ——— generación ——— */
+  .gen{display:grid; grid-template-columns:1fr 1fr; gap:0}
+  @media(max-width:760px){.gen{grid-template-columns:1fr}}
+  .gen .left{padding:26px; display:flex; flex-direction:column; gap:18px; border-right:1px solid var(--line-soft)}
+  .steps{display:flex; flex-direction:column; gap:0}
+  .st{display:flex; gap:13px; padding-bottom:16px; position:relative}
+  .st:not(:last-child)::before{content:""; position:absolute; left:10px; top:22px; bottom:0; width:1px; background:var(--line)}
+  .st .mk{
+    width:21px; height:21px; border-radius:50%; flex:none; display:grid; place-items:center;
+    font-size:11px; border:1px solid var(--line); background:var(--panel-2); color:var(--text-3); z-index:1
+  }
+  .st.done .mk{background:var(--ok-dim); border-color:rgba(59,191,106,.4); color:var(--ok)}
+  .st.now .mk{background:var(--brand-dim); border-color:var(--brand-line); color:var(--brand-hi)}
+  .st .tx b{display:block; font-size:13px; font-weight:500}
+  .st .tx small{display:block; font-size:11.5px; color:var(--text-3)}
+  .st.pend .tx b{color:var(--text-3); font-weight:400}
+  .payload{padding:22px 24px; background:var(--ink); min-width:0}
+  .payload .ttl{font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-3); margin-bottom:11px}
+  pre{
+    margin:0; font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:11.5px; line-height:1.65;
+    color:var(--text-2); overflow-x:auto; padding-bottom:4px
+  }
+  pre .k{color:var(--brand-hi)} pre .s{color:#8fd19e} pre .n{color:#e0c07a} pre .c{color:var(--text-3)}
+
+  /* ——— roadmap notion ——— */
+  .doc{background:var(--paper-2); color:var(--paper-ink)}
+  .doc .dcover{height:72px; background:radial-gradient(ellipse 60% 140% at 50% 0%, rgba(255,255,255,.16), transparent 70%), linear-gradient(115deg,#c1121f,var(--brand) 55%,#ff6a56 100%)}
+  .dinner{padding:32px 38px 44px}
+  @media(max-width:640px){.dinner{padding:24px 20px 32px}}
+  .doc h2.dt{font-size:31px; letter-spacing:-.03em; line-height:1.14}
+  .dsub{margin-top:7px; font-size:13px; color:var(--paper-ink-3)}
+  .dllamada{margin-top:13px; font-size:13.5px; color:var(--paper-ink-2); word-break:break-all}
+  .dllamada a{color:var(--brand-hi); text-decoration:none; border-bottom:1px solid rgba(230,57,70,.3)}
+  .brief{margin-top:28px; display:flex; flex-direction:column; gap:17px}
+  .dato{font-size:14px; line-height:1.7; color:var(--paper-ink-2); max-width:68ch}
+  .dato b{color:var(--paper-ink); font-weight:600}
+  .dato--bloque{background:rgba(230,57,70,.07); border-left:3px solid var(--brand); border-radius:8px; padding:16px 18px; max-width:none}
+  .semana{margin-top:40px}
+  .semana-titulo{
+    display:inline-block; font-size:15px; font-weight:600; letter-spacing:.02em; color:var(--brand-hi);
+    background:rgba(230,57,70,.07); border:1px solid rgba(230,57,70,.28); border-radius:8px; padding:8px 14px
+  }
+  .tareas{list-style:none; margin:17px 0 0; padding:0; display:flex; flex-direction:column; gap:2px}
+  .tareas li{display:flex; align-items:flex-start; gap:12px; padding:11px 12px; border-radius:8px; font-size:14px; line-height:1.6}
+  .tareas .tt{color:var(--paper-ink-2); flex:1; min-width:0}
+  .quien{
+    display:inline-block; margin-left:9px; vertical-align:2px; font-size:10.5px; font-weight:600;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--brand); background:rgba(230,57,70,.1);
+    border:1px solid var(--brand-line); border-radius:999px; padding:2px 9px; white-space:nowrap
+  }
+  .entregables{margin-top:15px; padding:16px 18px; border:1px solid var(--line-soft); border-radius:10px; background:rgba(255,255,255,.02)}
+  .entregables h4{font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--paper-ink-3)}
+  .entregables ul{margin:10px 0 0; padding-left:20px; display:flex; flex-direction:column; gap:7px}
+  .entregables li{font-size:13.5px; line-height:1.6; color:var(--paper-ink-2)}
+  .entregables li::marker{color:var(--brand)}
+  .entregables a{color:var(--brand-hi); text-decoration:none; border-bottom:1px solid rgba(230,57,70,.3)}
+  .box{display:inline-block; width:18px; height:18px; margin-top:3px; flex:none; border-radius:5px; border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.04)}
+  .box.on{background:linear-gradient(135deg,#e63946,#c1121f); border-color:transparent; position:relative; box-shadow:0 0 10px rgba(230,57,70,.4)}
+  .box.on::after{content:"✓"; position:absolute; inset:0; color:#fff; font-size:11px; line-height:16px; text-align:center}
+  .tag{display:inline-flex; font-size:11.5px; padding:3px 10px; border-radius:6px; background:rgba(255,255,255,.05); color:var(--paper-ink-2)}
+  .tag.red{background:var(--brand-dim); color:var(--brand); border:1px solid var(--brand-line)}
+  .tag.grn{background:var(--ok-dim); color:var(--ok); border:1px solid rgba(74,222,128,.3)}
+  .lnk{display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--brand-hi); text-decoration:none; border-bottom:1px solid rgba(230,57,70,.3); padding-bottom:1px}
+
+  /* ——— notas / decisiones ——— */
+  .notes{display:grid; grid-template-columns:repeat(auto-fit,minmax(248px,1fr)); gap:14px; margin-top:22px}
+  .note{border:1px solid var(--line); border-radius:var(--r); padding:17px 18px; background:var(--panel); display:flex; flex-direction:column; gap:7px}
+  .note .nk{font-size:10.5px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; color:var(--text-3)}
+  .note h4{font-size:14.5px}
+  .note p{font-size:13px; color:var(--text-2); line-height:1.6}
+  .note.ask{border-color:var(--brand-line); background:linear-gradient(160deg,rgba(225,43,38,.07),transparent 60%),var(--panel)}
+  .note.ask .nk{color:var(--brand-hi)}
+
+  .qlist{display:flex; flex-direction:column; gap:10px; margin-top:20px}
+  .qi{display:flex; gap:13px; padding:15px 17px; border:1px solid var(--line); border-radius:var(--r); background:var(--panel)}
+  .qi .qn{
+    width:24px; height:24px; flex:none; border-radius:7px; background:var(--brand-dim);
+    border:1px solid var(--brand-line); color:var(--brand-hi); display:grid; place-items:center;
+    font-size:11.5px; font-weight:600
+  }
+  .qi--ok{border-color:rgba(74,222,128,.3)}
+  .qi--ok .qn{background:var(--ok-dim); border-color:rgba(74,222,128,.35); color:var(--ok)}
+  .qi b{display:block; font-size:14px; font-weight:500; margin-bottom:3px}
+  .qi p{font-size:13px; color:var(--text-2); line-height:1.6}
+
+  /* ——— tiles ecosystem ——— */
+  .tiles{display:grid; grid-template-columns:repeat(auto-fill,minmax(122px,1fr)); gap:11px}
+  .tile{
+    aspect-ratio:1/1; border:1px solid var(--line-soft); border-radius:var(--r-sm);
+    background:var(--panel-2); display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:9px; padding:11px; text-align:center
+  }
+  .tile .mk{width:26px; height:26px; border-radius:7px; background:var(--panel-3); display:grid; place-items:center; font-size:11px; font-weight:700; color:var(--text-3)}
+  .tile span{font-size:10px; font-weight:600; letter-spacing:.09em; color:var(--text-3)}
+  .tile.new{border-color:var(--brand-line); background:linear-gradient(160deg,rgba(225,43,38,.13),transparent 62%),var(--panel-2)}
+  .tile.new .mk{background:linear-gradient(140deg,var(--brand-hi),var(--brand)); color:#fff}
+  .tile.new span{color:var(--text)}
+
+  /* ——— arquitectura ——— */
+  .arch{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:13px; margin-top:20px}
+  .ac{border:1px solid var(--line); border-radius:var(--r); background:var(--panel); overflow:hidden}
+  .ac .ah{padding:12px 15px; border-bottom:1px solid var(--line-soft); background:var(--panel-2); display:flex; align-items:center; justify-content:space-between; gap:9px}
+  .ac .ah b{font-size:13px; font-weight:600}
+  .ac .ah small{font-size:10.5px; color:var(--text-3)}
+  .ac ul{margin:0; padding:13px 15px 15px 30px; display:flex; flex-direction:column; gap:6px}
+  .ac li{font-size:12.5px; color:var(--text-2); line-height:1.55}
+  .ac li b{color:var(--text); font-weight:500}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.9em; background:var(--panel-3); padding:1px 5px; border-radius:4px; color:var(--text)}
+  .paper code{background:rgba(255,255,255,.07); color:var(--paper-ink)}
+
+  footer{padding-block:38px 56px; color:var(--text-3); font-size:12.5px; display:flex; flex-direction:column; gap:5px}
+  @media(max-width:700px){
+    .app{grid-template-columns:1fr}
+    .side{flex-direction:row; align-items:center; overflow-x:auto; border-right:0; border-bottom:1px solid var(--line-soft); gap:12px}
+    .nav{flex-direction:row}
+    .side-foot{display:none}
+    .picker{grid-template-columns:1fr}
+    .picker .cats{border-right:0; border-bottom:1px solid var(--line-soft); flex-direction:row; overflow-x:auto}
+    .cats .lbl{display:none}
+  }
+</style>
+
+<header class="top">
+  <div class="wrap top-inner">
+    <div class="brandmark"><i class="dot"></i><span>Aumenta Tu Valor · Ecosistema</span></div>
+    <h1>ATV Roadmaps<br><em>del canal de Discord al plan del cliente</em></h1>
+    <p class="lede">
+      Maqueta para revisar antes de construir. El coach abre el sistema, elige el canal del cliente,
+      genera un link, el cliente completa el formulario y la IA devuelve la página de “Próximos pasos” del mes.
+      Los canales y los clientes de estas pantallas son los reales de ATV Clients.
+    </p>
+    <div class="facts">
+      <span class="fact"><b>roadmaps.atvos.io</b></span>
+      <span class="fact">Neon compartida · esquema <b>roadmaps</b></span>
+      <span class="fact">Sesión <b>ecosystem_session</b></span>
+      <span class="fact">FastAPI + Pony · React (JS)</span>
+      <span class="fact">15 sep 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- ——— 0. dónde vive ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="step-tag"><i class="k">0</i> Dónde vive</span>
+      <h2>Una tile más en el dashboard de ATV Ecosystem</h2>
+      <p>
+        Mismo patrón que Hiring y Clients: la tile es un link externo a su propio dominio, no un módulo embebido.
+        Cada sistema tiene su dashboard y comparte la cookie de sesión del ecosistema.
+      </p>
+    </div>
+    <div class="screen">
+      <div class="chrome">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url">atvos.io<b>/dashboard</b></div>
+      </div>
+      <div style="padding:26px 24px">
+        <div class="tiles">
+          <div class="tile"><i class="mk">AL</i><span>ATV LANDING</span></div>
+          <div class="tile"><i class="mk">AO</i><span>ATV ONBOARDING</span></div>
+          <div class="tile"><i class="mk">AC</i><span>ATV CLIENTS</span></div>
+          <div class="tile"><i class="mk">AH</i><span>ATV HIRING</span></div>
+          <div class="tile new"><i class="mk">AR</i><span>ATV ROADMAPS</span></div>
+          <div class="tile"><i class="mk">AV</i><span>ATV VENTAS</span></div>
+          <div class="tile"><i class="mk">AM</i><span>ATV MARKETING</span></div>
+          <div class="tile"><i class="mk">AB</i><span>ATV BACKBONE</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <span class="nk">Cambio en el ecosistema</span>
+        <h4>Una entrada en <code>registry.js</code></h4>
+        <p>Se agrega la tile con <code>hubPath: 'https://roadmaps.atvos.io'</code>. Es el único archivo que se toca del repo de Ecosystem: nada de datos de otros sistemas.</p>
+      </div>
+      <div class="note">
+        <span class="nk">Sesión</span>
+        <h4>El coach no vuelve a loguearse</h4>
+        <p>Roadmaps valida la cookie <code>ecosystem_session</code> firmada con el SECRET del ecosistema, igual que hiring.atvos.io/dashboard.</p>
+      </div>
+      <div class="note">
+        <span class="nk">Datos</span>
+        <h4>Esquema propio, base compartida</h4>
+        <p>Misma Neon (<code>neondb</code>), esquema <code>roadmaps</code>. De <code>clients</code> solo se <b>lee</b> la lista de canales y clientes; no se escribe una sola fila ajena.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— 1. consola del coach ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="step-tag"><i class="k">1</i> El coach entra</span>
+      <h2>Un botón grande, y abajo lo que está en curso</h2>
+      <p>La acción principal ocupa el ancho completo. Debajo, los roadmaps vivos con el estado en el que está cada uno: quién todavía no completó el formulario es la pregunta que el coach se hace todos los días.</p>
+    </div>
+    <div class="screen">
+      <div class="chrome">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url">roadmaps.atvos.io<b>/</b></div>
+      </div>
+      <div class="app">
+        <aside class="side">
+          <div class="side-brand"><i class="sq">R</i><strong>ROADMAPS</strong></div>
+          <nav class="nav">
+            <a href="#" class="on">Roadmaps <span class="cnt">12</span></a>
+            <a href="#">Clientes <span class="cnt">73</span></a>
+            <a href="#">Plantillas <span class="cnt">4</span></a>
+            <a href="#">Ajustes</a>
+          </nav>
+          <div class="side-foot">
+            <span class="avatar">MB</span>
+            <div><div class="n">Mauri</div><div class="r">Coach · CSM</div></div>
+          </div>
+        </aside>
+        <div class="main">
+          <div class="main-head">
+            <div>
+              <h3>Roadmaps</h3>
+              <div class="sub">3 esperando formulario · 1 listo para revisar</div>
+            </div>
+          </div>
+          <button class="btn-hero">
+            <span class="plus">+</span>
+            <span>Generar nuevo roadmap a cliente
+              <small>Elegís el canal, se crea el link y se lo mandás</small>
+            </span>
+          </button>
+          <div class="tablewrap">
+            <table class="list">
+              <thead>
+                <tr><th>Cliente</th><th>Programa</th><th>Estado</th><th>Actualizado</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="cli"><span class="av">AD</span><div><div class="nm">Alicia Damián</div><div class="ch">#alicia-damian</div></div></div></td>
+                  <td class="muted">Boost</td>
+                  <td><span class="pill ok">Entregado</span></td>
+                  <td class="dim num">hace 2 d</td>
+                </tr>
+                <tr>
+                  <td><div class="cli"><span class="av">GS</span><div><div class="nm">Gonza Vallejos</div><div class="ch">#gonza-vallejos</div></div></div></td>
+                  <td class="muted">Avanzados</td>
+                  <td><span class="pill brand">Listo para revisar</span></td>
+                  <td class="dim num">hace 40 min</td>
+                </tr>
+                <tr>
+                  <td><div class="cli"><span class="av">PV</span><div><div class="nm">Paul Vega</div><div class="ch">#paul-vega</div></div></div></td>
+                  <td class="muted">Boost</td>
+                  <td><span class="pill info">Formulario completado</span></td>
+                  <td class="dim num">hace 3 h</td>
+                </tr>
+                <tr>
+                  <td><div class="cli"><span class="av">AH</span><div><div class="nm">Amy y Héctor</div><div class="ch">#amy-y-hector</div></div></div></td>
+                  <td class="muted">Advantage</td>
+                  <td><span class="pill warn">Link enviado</span></td>
+                  <td class="dim num">hace 1 d</td>
+                </tr>
+                <tr>
+                  <td><div class="cli"><span class="av">NN</span><div><div class="nm">Nicolás Núñez</div><div class="ch">#nicolas-nuñez</div></div></div></td>
+                  <td class="muted">Mentoría</td>
+                  <td><span class="pill warn">Link enviado</span></td>
+                  <td class="dim num">hace 4 d</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <span class="nk">Los cuatro estados</span>
+        <h4>Link enviado → Formulario completado → Listo para revisar → Entregado</h4>
+        <p>El coach nunca marca nada a mano salvo el último paso. Los tres primeros los mueve el sistema solo: el cliente abre el link, lo completa, la IA responde.</p>
+      </div>
+      <div class="note ask">
+        <span class="nk">A confirmar</span>
+        <h4>¿"Listo para revisar" o entrega directa?</h4>
+        <p>Lo maqueté con una revisión del coach antes de que el cliente lo vea. Si querés que el cliente lo reciba apenas la IA termina, se saca ese estado y son tres.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— 2. canales ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="step-tag"><i class="k">2</i> Elegir el canal</span>
+      <h2>La lista sale de ATV Clients, no se carga a mano</h2>
+      <p>Los canales llegan del esquema <code>clients</code> agrupados por categoría de Discord, con el cliente ya matcheado. Son los 73 canales reales que hoy sincroniza el bot.</p>
+    </div>
+    <div class="screen">
+      <div class="chrome">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url">roadmaps.atvos.io<b>/nuevo</b></div>
+      </div>
+      <div class="picker">
+        <div class="cats">
+          <div class="lbl">Categoría</div>
+          <button class="on">Todos <span class="c">73</span></button>
+          <button>Advantage <span class="c">3</span></button>
+          <button>Avanzados <span class="c">35</span></button>
+          <button>Boost <span class="c">33</span></button>
+          <button>Mentoría <span class="c">1</span></button>
+          <button>Principiantes <span class="c">1</span></button>
+        </div>
+        <div class="body">
+          <div class="search">🔍 <span>Buscar canal o cliente…</span></div>
+          <div class="chan-list">
+            <div class="chan sel">
+              <span class="hash">#</span>
+              <div class="who"><b>gonza-vallejos</b><small>Gonza Vallejos · Avanzados</small></div>
+              <div class="meta">Últ. mensaje<br>hace 6 h</div>
+            </div>
+            <div class="chan">
+              <span class="hash">#</span>
+              <div class="who"><b>alicia-damian</b><small>Alicia Damián · Boost</small></div>
+              <div class="meta">Roadmap<br>hace 2 d</div>
+            </div>
+            <div class="chan">
+              <span class="hash">#</span>
+              <div class="who"><b>kilian-idealsales</b><small>Kilian · Avanzados</small></div>
+              <div class="meta">Últ. mensaje<br>hace 1 d</div>
+            </div>
+            <div class="chan">
+              <span class="hash">#</span>
+              <div class="who"><b>har-program</b><small>HAR Program · Boost</small></div>
+              <div class="meta">Últ. mensaje<br>hace 3 h</div>
+            </div>
+            <div class="chan">
+              <span class="hash">#</span>
+              <div class="who"><b>uriel-casaglia</b><small>Uriel Casaglia · Advantage</small></div>
+              <div class="meta">Últ. mensaje<br>hace 2 d</div>
+            </div>
+            <div class="chan">
+              <span class="hash">#</span>
+              <div class="who"><b>santiago-y-javier</b><small>Santiago y Javier · Avanzados</small></div>
+              <div class="meta">Últ. mensaje<br>hace 5 h</div>
+            </div>
+            <div class="chan">
+              <span class="hash">#</span>
+              <div class="who"><b>rodrigo-ferrero</b><small>Rodrigo Ferrero · Principiantes</small></div>
+              <div class="meta">Últ. mensaje<br>hace 8 h</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-top:4px;border-top:1px solid var(--line-soft)">
+            <span class="dim" style="font-size:12px">Seleccionado: <b style="color:var(--text)">#gonza-vallejos</b></span>
+            <button class="btn btn-primary">Crear link del formulario</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <span class="nk">De dónde sale</span>
+        <h4><code>clients.discord_transcripts</code> + <code>clients.clientes</code></h4>
+        <p>Canal, categoría y última actividad de la tabla de transcripts; nombre, plan y estado del cliente de la tabla de clientes. Consulta de solo lectura con su propio DSN, igual que hace ATV Ops.</p>
+      </div>
+      <div class="note ask">
+        <span class="nk">A confirmar</span>
+        <h4>¿Canal sin cliente cargado?</h4>
+        <p>Hoy hay canales que el bot todavía no matcheó. Los maqueté igual seleccionables, escribiendo el nombre a mano. Decime si preferís que no aparezcan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— 3. link ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="step-tag"><i class="k">3</i> El link</span>
+      <h2>Un link por cliente, que se manda por donde quieras</h2>
+      <p>El sistema no manda mensajes: genera el link y lo deja listo para copiar. Eso deja el canal de envío en manos del coach (Discord, WhatsApp, mail) sin tocar la cuenta de nadie.</p>
+    </div>
+    <div class="screen">
+      <div class="chrome">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url">roadmaps.atvos.io<b>/nuevo/listo</b></div>
+      </div>
+      <div style="padding:26px 24px; background:var(--panel)">
+        <div class="linkcard">
+          <div>
+            <div class="eyebrow" style="margin-bottom:7px">Link creado</div>
+            <h3 style="font-size:19px">Formulario de roadmap · Gonza Vallejos</h3>
+            <p class="muted" style="font-size:13px; margin-top:5px">#gonza-vallejos · Avanzados · vence en 14 días</p>
+          </div>
+          <div class="linkrow">
+            <div class="linkbox"><span>roadmaps.atvos.io/f/</span>k7m2-gonza-9fd</div>
+            <button class="btn btn-primary">Copiar link</button>
+          </div>
+          <div class="sendrow">
+            <button class="btn">Copiar mensaje para Discord</button>
+            <button class="btn">Vista previa del formulario</button>
+          </div>
+          <p class="dim" style="font-size:12px; border-top:1px solid var(--line-soft); padding-top:13px">
+            El link es de un solo uso por cliente y se puede reenviar. Cuando lo completa, el roadmap aparece en la lista sin que nadie avise.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— 4. formulario ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="step-tag"><i class="k">4</i> El cliente completa</span>
+      <h2>El formulario es lo que ve el cliente</h2>
+      <p>Mismo sistema visual que ATV Onboarding, que es lo otro que el cliente ya abrió: fondo con glow, tarjeta de vidrio y el rojo como único acento. Cinco bloques, uno por pantalla, con el vocabulario de los programas.</p>
+    </div>
+    <div class="screen">
+      <div class="chrome">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url">roadmaps.atvos.io<b>/f/k7m2-gonza-9fd</b></div>
+      </div>
+      <div class="paper">
+        <div class="phead">
+          <div class="brandline">
+            <div class="lg"><i class="sq">A</i><strong>Aumenta Tu Valor</strong></div>
+            <span class="tag red">Avanzados</span>
+          </div>
+          <h3>Tus próximos pasos del mes</h3>
+          <p class="psub">Diez minutos de respuestas y tu coach arma el plan de las próximas cuatro semanas sobre tu negocio real, no sobre un promedio.</p>
+          <div class="prog"><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i></div>
+          <div class="stepline"><span>Paso 3 de 5</span><b>Audiencia y contenido</b></div>
+        </div>
+        <div class="pbody">
+          <div class="q">
+            <label for="f-avatar">¿A quién le vendés hoy?</label>
+            <div class="help">Lo más específico que puedas: a qué se dedica, qué factura, qué quiere lograr.</div>
+            <div class="field ta filled" id="f-avatar">Creadores de contenido de fitness con 10k–80k seguidores que ya venden planes sueltos por DM y quieren pasar a un programa de 3 meses con acompañamiento.</div>
+          </div>
+          <div class="q">
+            <label for="f-canal">¿Dónde está tu audiencia hoy?</label>
+            <div class="chips" id="f-canal">
+              <span class="chip on">Instagram</span><span class="chip on">YouTube</span><span class="chip">TikTok</span>
+              <span class="chip">Email</span><span class="chip">Comunidad propia</span><span class="chip">Nada todavía</span>
+            </div>
+          </div>
+          <div class="q">
+            <label for="f-recurso">¿Tenés recurso semanal publicando?</label>
+            <div class="help">El video de YouTube que ordena el resto del contenido de la semana.</div>
+            <div class="chips" id="f-recurso">
+              <span class="chip">Sí, todas las semanas</span><span class="chip on">A veces</span><span class="chip">No</span>
+            </div>
+          </div>
+          <div class="q">
+            <label for="f-vsl">¿Qué pieza del sistema de ventas ya tenés?</label>
+            <div class="chips" id="f-vsl">
+              <span class="chip on">VSL de chat</span><span class="chip">Proceso de agendamiento</span>
+              <span class="chip on">Triage</span><span class="chip">Nutrición previa</span><span class="chip">Ninguna</span>
+            </div>
+          </div>
+          <div class="pfoot">
+            <span class="note">Tus respuestas las ve tu coach y nadie más.</span>
+            <button class="btn-paper">Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <span class="nk">Los cinco bloques</span>
+        <h4>Negocio y oferta · Números de hoy · Audiencia y contenido · Sistema de ventas · El objetivo del mes</h4>
+        <p>Es el orden en que la IA necesita el contexto: primero qué vende, después desde qué números arranca, y recién al final a dónde quiere llegar este mes.</p>
+      </div>
+      <div class="note">
+        <span class="nk">Diseño</span>
+        <h4>Se ve como el onboarding, a propósito</h4>
+        <p>Es el mismo sistema: fondo <code>#0a0505</code> con glow, tarjetas <code>shell-card</code> con la hairline roja
+        arriba, y el acento <code>#e63946</code>. El cliente no debería notar que cambió de sistema.</p>
+      </div>
+      <div class="note">
+        <span class="nk">Por qué importa</span>
+        <h4>El formulario define la calidad del roadmap</h4>
+        <p>Es el único input. Cada pregunta tiene que traducirse en una decisión del plan: si una respuesta no cambia nada del roadmap, la pregunta sobra.</p>
+      </div>
+      <div class="note ask">
+        <span class="nk">Te necesito acá</span>
+        <h4>Las preguntas las definís vos</h4>
+        <p>Maqueté las que se deducen de los programas (avatar, método único, MVP, recurso semanal, VSL de chat, triage). Pasame tu lista y las cambio: es una constante de configuración, no código.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— 5. IA ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="step-tag"><i class="k">5</i> La IA de Jeremy</span>
+      <h2>Se le manda el formulario, devuelve el roadmap</h2>
+      <p>El sistema hace un POST con las respuestas y el contexto del cliente, y espera de vuelta un JSON con la estructura del roadmap. Lo dibujo así para que sea el contrato que le pases a Jeremy y lo ajustemos con lo que él ya tiene.</p>
+    </div>
+    <div class="screen">
+      <div class="chrome">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url">roadmaps.atvos.io<b>/r/gonza-vallejos</b> · generando</div>
+      </div>
+      <div class="gen">
+        <div class="left">
+          <div>
+            <div class="eyebrow">En proceso</div>
+            <h3 style="font-size:18px; margin-top:6px">Armando los próximos pasos de Gonza Vallejos</h3>
+            <p class="muted" style="font-size:13px; margin-top:5px">Suele tardar entre 40 segundos y 2 minutos.</p>
+          </div>
+          <div class="steps">
+            <div class="st done"><span class="mk">✓</span><div class="tx"><b>Formulario recibido</b><small>22 respuestas · 14:32</small></div></div>
+            <div class="st done"><span class="mk">✓</span><div class="tx"><b>Contexto del cliente adjuntado</b><small>Programa Avanzados · alta 12 jun 2026</small></div></div>
+            <div class="st now"><span class="mk">●</span><div class="tx"><b>Enviado a la IA</b><small>POST /roadmap · esperando respuesta</small></div></div>
+            <div class="st pend"><span class="mk">4</span><div class="tx"><b>Roadmap guardado</b><small>Queda editable para el coach</small></div></div>
+            <div class="st pend"><span class="mk">5</span><div class="tx"><b>Aviso al coach</b><small>Pasa a "Listo para revisar"</small></div></div>
+          </div>
+        </div>
+        <div class="payload">
+          <div class="ttl">Lo que se manda</div>
+<pre><span class="c">POST {ROADMAP_AI_WEBHOOK_URL}</span>
+<span class="c">Authorization: Bearer {ROADMAP_AI_KEY}</span>
+
+{
+  <span class="k">"roadmap_id"</span>: <span class="s">"2748df-gonza-cc60"</span>,
+  <span class="k">"cliente"</span>: {
+    <span class="k">"nombre"</span>: <span class="s">"Gonza Vallejos"</span>,
+    <span class="k">"canal"</span>: <span class="s">"gonza-vallejos"</span>,
+    <span class="k">"programa"</span>: <span class="s">"Avanzados"</span>,
+    <span class="k">"coach"</span>: <span class="s">"Mauri"</span>
+  },
+  <span class="k">"llamada_url"</span>: <span class="s">"https://fathom.video/…"</span>,
+  <span class="k">"mes"</span>: <span class="s">"Septiembre 2026"</span>,
+  <span class="k">"respuestas"</span>: [
+    {
+      <span class="k">"id"</span>: <span class="s">"avatar"</span>,
+      <span class="k">"pregunta"</span>: <span class="s">"¿A quién le vendés hoy?"</span>,
+      <span class="k">"valor"</span>: <span class="s">"Creadores de fitness…"</span>
+    }
+  ],
+  <span class="k">"callback_url"</span>: <span class="s">"https://roadmaps.atvos.io/api/ia/callback"</span>
+}</pre>
+          <div class="ttl" style="margin-top:20px">Lo que se espera de vuelta</div>
+<pre>{
+  <span class="k">"titulo"</span>: <span class="s">"Próximos pasos"</span>,
+  <span class="k">"mes"</span>: <span class="s">"Septiembre 2026"</span>,
+  <span class="k">"meta_mes"</span>: <span class="s">"Ordenar el contenido…"</span>,
+  <span class="k">"foco_mes"</span>: <span class="s">"Regularidad + agendamiento"</span>,
+  <span class="k">"avatar"</span>: <span class="s">"Creadores de fitness…"</span>,
+  <span class="k">"como_trabajamos"</span>: <span class="s">"Avanzados no es DFY…"</span>,
+  <span class="k">"semanas"</span>: [{
+    <span class="k">"etiqueta"</span>: <span class="s">"Semana 1 y 2"</span>,
+    <span class="k">"nombre"</span>: <span class="s">"Ordenar la oferta"</span>,
+    <span class="k">"tareas"</span>: [{
+      <span class="k">"tarea"</span>: <span class="s">"Reescribir el avatar…"</span>,
+      <span class="k">"quien"</span>: <span class="s">"cliente"</span>
+    }],
+    <span class="k">"entregables"</span>: [
+      { <span class="k">"texto"</span>: <span class="s">"Avatar reescrito"</span> }
+    ]
+  }]
+}</pre>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <span class="nk">Cómo queda armado</span>
+        <h4>URL y clave en variables de entorno</h4>
+        <p><code>ROADMAP_AI_WEBHOOK_URL</code> y <code>ROADMAP_AI_KEY</code> en el <code>.env</code>. Si Jeremy cambia de endpoint o de proveedor, se cambia una línea y no se toca código.</p>
+      </div>
+      <div class="note">
+        <span class="nk">Si tarda</span>
+        <h4>Respuesta directa o callback</h4>
+        <p>Soporta las dos: si responde en el momento, se guarda ahí; si tarda, la IA pega en <code>callback_url</code> cuando termina y el coach ve el cambio solo.</p>
+      </div>
+      <div class="note ask">
+        <span class="nk">Te necesito acá</span>
+        <h4>¿Qué expone hoy la IA de Jeremy?</h4>
+        <p>Si ya tiene un endpoint con su propio formato, me pasás la doc y adapto el mapeo. Si todavía no existe, este contrato sirve como especificación para que lo construya.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— 6. roadmap ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="step-tag"><i class="k">6</i> El entregable</span>
+      <h2>"Próximos pasos", igual que en Notion</h2>
+      <p>
+        Es la página que ATV ya arma a mano para cada cliente. Arriba la cabecera del mes —llamada, meta principal,
+        foco, avatar y cómo trabajamos—; abajo un bloque por semana con las tareas marcables, el
+        <b>(nosotros hacemos)</b> donde ejecuta ATV, y los entregables de esa semana. El horizonte es el <b>mes</b>, no 90 días.
+      </p>
+    </div>
+    <div class="screen">
+      <div class="chrome">
+        <div class="lights"><i></i><i></i><i></i></div>
+        <div class="url">roadmaps.atvos.io<b>/r/2748df-gonza-vallejos-cc60</b></div>
+      </div>
+      <div class="doc">
+        <div class="dcover"></div>
+        <div class="dinner">
+          <h2 class="dt">Próximos pasos</h2>
+          <p class="dsub">Gonza Vallejos · Septiembre 2026 · Avanzados</p>
+          <p class="dllamada">Llamada (10 de septiembre): <a href="#">https://fathom.video/share/Zj-LzUWQYN41FCGubtZ6fSyVUZ6eDEPz</a></p>
+
+          <div class="brief">
+            <p class="dato"><b>Meta principal del mes:</b> Ordenar el contenido para que salga todas las semanas sin depender de la inspiración, e instalar el proceso de agendamiento que hoy no existe.</p>
+            <p class="dato"><b>Foco del mes:</b> Regularidad de contenido + agendamiento. Nada de tocar el precio todavía.</p>
+            <p class="dato"><b>Avatar:</b> Creadores de contenido de fitness con 10k–80k seguidores que ya venden planes sueltos por DM y quieren pasar a un programa de 3 meses con acompañamiento.</p>
+            <p class="dato dato--bloque"><b>Cómo trabajamos (Avanzados):</b><br>
+              Avanzados no es un servicio DFY. Vos ejecutás y nosotros te acompañamos con frameworks, estructura y revisión.
+              En este roadmap hay partes donde hacemos directo (el guion del recurso semanal y el flujo de agendamiento) y
+              partes donde ayudamos (revisión de reels, KPIs). Todo lo subís al Discord y ahí revisamos, damos check o corrección.</p>
+          </div>
+
+          <div class="semana">
+            <h3 class="semana-titulo">Semana 1 y 2 — Ordenar la oferta y el método</h3>
+            <ul class="tareas">
+              <li><span class="box on"></span><span class="tt">Reescribir el avatar tomando tus 3 mejores clientes: quiénes pagaron más y mejores resultados tuvieron.</span></li>
+              <li><span class="box"></span><span class="tt">Armamos con vos el mapa del método único en un Miro y te lo presentamos por Loom.<span class="quien">nosotros hacemos</span></span></li>
+              <li><span class="box"></span><span class="tt">Volcar avatar, oferta y método en la bio de Instagram para que se entienda en cinco segundos.</span></li>
+            </ul>
+            <div class="entregables">
+              <h4>Entregables de la semana:</h4>
+              <ul>
+                <li>Avatar reescrito + método único en Miro (lo armamos nosotros, se entrega por Loom)</li>
+                <li><a href="#">Proyecciones y limitaciones</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="semana">
+            <h3 class="semana-titulo">Semana 3 — Regularidad de contenido</h3>
+            <ul class="tareas">
+              <li><span class="box"></span><span class="tt">Publicar el recurso semanal de YouTube. La regularidad pesa más que la producción.</span></li>
+              <li><span class="box"></span><span class="tt">Tres reels y cinco historias que terminen siempre en el recurso de la semana.</span></li>
+              <li><span class="box"></span><span class="tt">Revisamos los guiones antes de que grabes y te devolvemos correcciones por Discord.<span class="quien">nosotros hacemos</span></span></li>
+            </ul>
+            <div class="entregables">
+              <h4>Entregables de la semana:</h4>
+              <ul>
+                <li>Recurso semanal publicado + 3 reels</li>
+                <li>Calendario de contenido de las próximas 4 semanas</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="semana">
+            <h3 class="semana-titulo">Semana 4 — Agendamiento y triage</h3>
+            <ul class="tareas">
+              <li><span class="box"></span><span class="tt">Armamos el flujo de chat a llamada para tu tipo de cliente.<span class="quien">nosotros hacemos</span></span></li>
+              <li><span class="box"></span><span class="tt">Implementar el triage antes de cada llamada para subir la tasa de presentación.</span></li>
+              <li><span class="box"></span><span class="tt">Sumarle al VSL de chat las objeciones nuevas que aparecieron en las últimas llamadas.</span></li>
+            </ul>
+            <div class="entregables">
+              <h4>Entregables de la semana:</h4>
+              <ul>
+                <li>Flujo de agendamiento andando</li>
+                <li>VSL de chat actualizado</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notes">
+      <div class="note">
+        <span class="nk">Por qué esta estructura</span>
+        <h4>Es el Notion real, no un template</h4>
+        <p>Sale de la página "Próximos pasos" de Premia2 que pasó Franco. La IA no inventa un formato: llena el que el equipo ya usa.</p>
+      </div>
+      <div class="note">
+        <span class="nk">La pieza que evita el malentendido</span>
+        <h4>"Cómo trabajamos" va en el documento</h4>
+        <p>Es el párrafo que aclara que el programa no es DFY y qué hace ATV directo. Está en el Notion por algo: conviene fijarlo por programa en vez de que la IA lo reescriba cada vez.</p>
+      </div>
+      <div class="note">
+        <span class="nk">Vivo, no PDF</span>
+        <h4>Los casilleros los marca el cliente</h4>
+        <p>El link le queda al cliente y cada check se guarda. El coach ve el avance real desde su consola sin preguntar en el canal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— decisiones ——— -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Antes de construir</span>
+      <h2>Lo que necesito que decidas</h2>
+      <p>Todo lo demás lo puedo resolver solo con las convenciones del ecosistema. Estas cinco cambian el producto.</p>
+    </div>
+    <div class="qlist">
+      <div class="qi qi--ok"><span class="qn">✓</span><div><b>El Notion de referencia</b><p>Resuelto: pasaste la captura de “Próximos pasos” y la estructura ya está copiada, incluido el <code>(nosotros hacemos)</code> y los entregables por semana.</p></div></div>
+      <div class="qi"><span class="qn">2</span><div><b>La IA de Jeremy</b><p>¿Endpoint, clave y formato? Si no existe todavía, le paso el contrato de la pantalla 5 como especificación.</p></div></div>
+      <div class="qi"><span class="qn">3</span><div><b>Las preguntas del formulario</b><p>Maqueté cinco bloques con el vocabulario de los programas. Tu lista manda.</p></div></div>
+      <div class="qi"><span class="qn">4</span><div><b>¿El coach revisa antes de entregar?</b><p>Lo puse como paso obligatorio. Si preferís entrega directa, son tres estados en vez de cuatro.</p></div></div>
+      <div class="qi"><span class="qn">5</span><div><b>¿Quién marca los checks?</b><p>Lo maqueté con el cliente marcando y el coach mirando el avance. La otra opción es un documento cerrado.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ——— arquitectura ——— -->
+<section style="border-bottom:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Cómo se construye</span>
+      <h2>Mismas convenciones que el resto del ecosistema</h2>
+      <p>Raíz <code>frontend/</code> + <code>backend/</code>, dominio en <code>backend/src/</code>, Pony con <code>db_session</code> en los servicios y controladores delgados. Nada nuevo que aprender.</p>
+    </div>
+    <div class="arch">
+      <div class="ac">
+        <div class="ah"><b>Esquema <code>roadmaps</code></b><small>Neon compartida</small></div>
+        <ul>
+          <li><b>roadmap</b> — cliente, canal, coach, estado, token, llamada, meta y foco del mes</li>
+          <li><b>formulario_respuesta</b> — respuestas como JSONB, igual que <code>hiring.applications</code></li>
+          <li><b>semana</b> — etiqueta (“Semana 1 y 2”), nombre, orden</li>
+          <li><b>tarea</b> — texto, quién ejecuta, check, fecha de check</li>
+          <li><b>entregable</b> — texto y link opcional, por semana</li>
+          <li><b>generacion</b> — payload enviado, respuesta cruda, error, duración</li>
+        </ul>
+      </div>
+      <div class="ac">
+        <div class="ah"><b>Backend</b><small>FastAPI + Pony</small></div>
+        <ul>
+          <li><b>roadmaps_controller</b> — listar, crear, estado, entregar</li>
+          <li><b>canales_controller</b> — lista de canales leída de <code>clients</code></li>
+          <li><b>formulario_controller</b> — público por token, sin sesión</li>
+          <li><b>ia_controller</b> — dispara la generación y recibe el callback</li>
+          <li><b>auth_controller</b> — valida <code>ecosystem_session</code></li>
+        </ul>
+      </div>
+      <div class="ac">
+        <div class="ah"><b>Frontend</b><small>React + Vite (JS)</small></div>
+        <ul>
+          <li><b>/</b> — consola del coach</li>
+          <li><b>/nuevo</b> — selector de canal y link</li>
+          <li><b>/f/:token</b> — formulario del cliente, sin login</li>
+          <li><b>/r/:token</b> — el roadmap, con los checks</li>
+          <li>Sistema visual de ATV Onboarding: glow, vidrio y rojo <code>#e63946</code></li>
+          <li>Poppins (el onboarding todavía va en Inter)</li>
+        </ul>
+      </div>
+      <div class="ac">
+        <div class="ah"><b>Deploy</b><small>VPS Hostinger</small></div>
+        <ul>
+          <li><code>roadmaps.atvos.io</code> con nginx + Certbot</li>
+          <li>Puertos <b>8014</b> backend y <b>8094</b> frontend (libres)</li>
+          <li><code>/opt/atv-roadmaps</code> con docker compose</li>
+          <li>En local SQLite: se levanta sin credenciales de Neon</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div>Maqueta · ATV Roadmaps · 15 de septiembre de 2026</div>
+  <div>Clientes y canales tomados de los transcripts reales de ATV Clients. Ninguna pantalla escribe en otro sistema.</div>
+</footer>
