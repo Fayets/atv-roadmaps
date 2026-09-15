@@ -30,33 +30,9 @@ export default function ConsolaPage() {
     )
   }, [roadmaps, busqueda])
 
-  const esperando = (roadmaps || []).filter((r) => r.estado === 'link_enviado').length
-  const porRevisar = (roadmaps || []).filter((r) => r.estado === 'listo_para_revisar').length
-
   return (
     <Consola coach={coach}>
-      <div className="consola-head">
-        <div>
-          <h1>Roadmaps</h1>
-          <div className="sub">
-            {roadmaps === null
-              ? 'Cargando…'
-              : `${esperando} esperando formulario · ${porRevisar} listo${porRevisar === 1 ? '' : 's'} para revisar`}
-          </div>
-        </div>
-      </div>
-
       {error && <div className="error-box">{error}</div>}
-
-      <button type="button" className="btn-hero" onClick={() => navegar('/nuevo')}>
-        <span className="plus" aria-hidden="true">
-          +
-        </span>
-        <span>
-          Generar nuevo roadmap a cliente
-          <small>Elegís el canal, se crea el link y se lo mandás</small>
-        </span>
-      </button>
 
       {roadmaps !== null && roadmaps.length > 0 && (
         <input
@@ -72,7 +48,7 @@ export default function ConsolaPage() {
       {roadmaps === null && <p className="cargando">Cargando roadmaps…</p>}
 
       {roadmaps?.length === 0 && (
-        <p className="vacio">Todavía no generaste ninguno. Empezá por el botón de arriba.</p>
+        <p className="vacio">Todavía no generaste ninguno. Empezá por «Nuevo», en la barra de la izquierda.</p>
       )}
 
       {roadmaps !== null && roadmaps.length > 0 && visibles.length === 0 && (
