@@ -79,6 +79,13 @@ export default function RoadmapPage() {
     return <Aviso titulo="La generación falló" texto="Se puede volver a intentar desde la consola." />
   }
 
+  // Si los bloques son días (un plan corto) en vez de semanas, "del mes" y
+  // "de la semana" suenan mal. Los rótulos siguen al contenido.
+  const porDias = roadmap.semanas.some((s) => /d[ií]as?\s*\d/i.test(s.etiqueta || ''))
+  const rotulos = porDias
+    ? { meta: 'Meta principal', foco: 'Foco', entregables: 'Entregables' }
+    : { meta: 'Meta principal del mes', foco: 'Foco del mes', entregables: 'Entregables de la semana:' }
+
   return (
     <div className="atv-shell doc-page">
       <article className="doc shell-card">
@@ -88,7 +95,7 @@ export default function RoadmapPage() {
             <h1 className="doc-titulo">{roadmap.titulo}</h1>
             <p className="doc-sub">
               {roadmap.cliente_nombre}
-              {roadmap.mes ? ` · ${roadmap.mes}` : ''}
+              {roadmap.mes && !porDias ? ` · ${roadmap.mes}` : ''}
               {roadmap.programa ? ` · ${roadmap.programa}` : ''}
             </p>
             {roadmap.llamada_url && (
@@ -102,8 +109,8 @@ export default function RoadmapPage() {
           </header>
 
           <div className="brief">
-            <Dato k="Meta principal del mes" v={roadmap.meta_mes} />
-            <Dato k="Foco del mes" v={roadmap.foco_mes} />
+            <Dato k={rotulos.meta} v={roadmap.meta_mes} />
+            <Dato k={rotulos.foco} v={roadmap.foco_mes} />
             <Dato k="Avatar" v={roadmap.avatar} />
             <Dato
               k={`Cómo trabajamos${roadmap.programa ? ` (${roadmap.programa})` : ''}`}
@@ -142,7 +149,7 @@ export default function RoadmapPage() {
 
               {semana.entregables.length > 0 && (
                 <div className="entregables">
-                  <h3>Entregables de la semana:</h3>
+                  <h3>{rotulos.entregables}</h3>
                   <ul>
                     {semana.entregables.map((e, j) => (
                       <li key={j}>

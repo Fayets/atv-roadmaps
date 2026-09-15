@@ -260,11 +260,15 @@ class IAServices:
         Acepta el roadmap en la raíz o anidado en `roadmap` / `data` / `output`,
         y tolera sinónimos razonables. Si mañana Jeremy cambia los nombres, se
         agregan acá y nada más del sistema se entera."""
+        from src.services.contenido_ia import desde_texto
+
         if isinstance(cuerpo, str):
             try:
                 cuerpo = json.loads(cuerpo)
             except json.JSONDecodeError:
-                return {}
+                # No es JSON: HTML o texto del agente. El contenido importa, el
+                # formato lo pone este sistema.
+                return desde_texto(cuerpo)
         if not isinstance(cuerpo, dict):
             return {}
 
@@ -275,6 +279,20 @@ class IAServices:
                 break
 
         crudas = cuerpo.get("semanas") or cuerpo.get("weeks") or cuerpo.get("bloques") or []
+
+        # El agente puede devolver el roadmap como texto dentro de un campo
+        # (`output`, `html`, `content`…) en vez de estructurado.
+        if not crudas:
+            for clave in ("output", "html", "content", "resultado", "roadmap", "text", "message", "respuesta"):
+                valor = cuerpo.get(clave)
+                if isinstance(valor, str) and len(valor.strip()) > 40:
+                    leido = desde_texto(valor)
+                    if leido.get("semanas"):
+                        # Lo que ya venía suelto en el JSON gana sobre lo leído del texto.
+                        for campo in ("titulo", "mes", "meta_mes", "foco_mes", "avatar", "como_trabajamos"):
+                            if cuerpo.get(campo):
+                                leido[campo] = cuerpo[campo]
+                        return leido
         semanas = []
         for i, semana in enumerate(crudas):
             if not isinstance(semana, dict):
