@@ -37,7 +37,13 @@ async def callback(request: Request):
         from src.services.ia_services import API_KEY, AUTH_HEADER, AUTH_PREFIJO
 
         if API_KEY:
-            enviado = request.headers.get(AUTH_HEADER, "") or request.headers.get("authorization", "")
+            # Se acepta por header o por query (`?k=`): el agente de la IA pega
+            # en la URL que le pasamos, sin tener que armar headers.
+            enviado = (
+                request.query_params.get("k", "")
+                or request.headers.get(AUTH_HEADER, "")
+                or request.headers.get("authorization", "")
+            )
             if enviado.removeprefix(AUTH_PREFIJO).removeprefix("Bearer ").strip() != API_KEY:
                 raise HTTPException(status_code=401, detail="Clave inválida.")
         return service.recibir_callback(await request.json())

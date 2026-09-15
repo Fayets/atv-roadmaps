@@ -56,6 +56,13 @@ def vencer_si_no_volvio(roadmap) -> None:
     roadmap.actualizado_en = datetime.utcnow()
 
 
+def _callback_url() -> str | None:
+    if not CALLBACK_BASE:
+        return None
+    base = f"{CALLBACK_BASE}/api/ia/callback"
+    return f"{base}?k={API_KEY}" if API_KEY else base
+
+
 def _legible(pregunta_id: str, valor) -> str:
     """El valor como lo leería una persona.
 
@@ -157,7 +164,9 @@ class IAServices:
             "respuestas": respuestas,
             "respuestas_por_id": por_id,
             "formulario_texto": texto,
-            "callback_url": f"{CALLBACK_BASE}/api/ia/callback" if CALLBACK_BASE else None,
+            # La clave va en la URL: pedirle a un agente que mande un header es
+            # frágil, pegarle a una URL que ya trae todo es difícil de arruinar.
+            "callback_url": _callback_url(),
             # Las plantillas de trigger suelen leer las variables de la raíz del
             # body o de `data`. Se mandan en los tres lugares para no depender de
             # cómo esté atado del otro lado; sobra información, no falta.
